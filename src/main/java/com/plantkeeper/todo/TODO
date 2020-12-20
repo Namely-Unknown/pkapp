@@ -1,0 +1,7 @@
+Add Exception handling to all deletes
+Consider returning ResponseEntity<>(null, HttpStatus.OK) for OrderItem POST Mappings to save on data throughput - Not really going to do much as items are returned other than assure we have a HttpStatus.OK
+Add checks to all POST mappings to make sure minimum data is present
+Plan views to return and do additional mappings as needed -> potentially accept a string second arg on mapToView with the desired view type to return.  This would require an abstract parent view class for each view.
+Validate things like containerId or plantId prior to making product?
+make get requests into /entity/getdependency/id
+Likely want to return name for any PARENTITEM id in view model
