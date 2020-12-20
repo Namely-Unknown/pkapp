@@ -44,7 +44,7 @@ public class ContainerController {
 		}
 	}
 
-	@GetMapping("/api/containers/{id}")
+	@GetMapping("/api/containers/company/{id}")
 	private ResponseEntity<List<ContainerView>> getAllContainers(@PathVariable("id") Long companyId) {
 		List<ContainerView> containers = service.findByCompanyId(companyId).stream()
 				.map(container -> service.mapToView(container)).collect(Collectors.toList());

@@ -40,7 +40,7 @@ public class CustomerOrderController {
 		}
 	}
 	
-	@GetMapping("/api/customerorders/{id}")
+	@GetMapping("/api/customerorders/customer/{id}")
 	private ResponseEntity<List<CustomerOrderView>> getAllOrders(@PathVariable("id") Long customerId){
 		List<CustomerOrderView> orders = service.findByCompanyId(customerId).stream()
 				.map(order -> service.mapToView(order)).collect(Collectors.toList());

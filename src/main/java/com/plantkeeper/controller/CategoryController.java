@@ -41,7 +41,7 @@ public class CategoryController {
 		}
 	}
 
-	@GetMapping("/api/categories/{id}")
+	@GetMapping("/api/categories/company/{id}")
 	private ResponseEntity<List<CategoryView>> getAllCategories(@PathVariable("id") Long companyId) {
 		List<CategoryView> categories = service.findByCompanyId(companyId).stream().map(dto -> service.mapToView(dto))
 				.collect(Collectors.toList());

@@ -44,7 +44,7 @@ public class ReturnItemController {
 		}
 	}
 
-	@GetMapping("/api/returnitem/orderitem/{id}")
+	@GetMapping("/api/returnitems/orderitem/{id}")
 	private ResponseEntity<List<ReturnItemView>> getReturnItemByOrderItem(@PathVariable("id") Long orderItemId) {
 		List<ReturnItemView> items = service.findByOrderItemId(orderItemId).stream()
 				.map(returnItem -> service.mapToView(returnItem)).collect(Collectors.toList());
@@ -52,7 +52,7 @@ public class ReturnItemController {
 		return new ResponseEntity<>(items, HttpStatus.OK);
 	}
 
-	@GetMapping("/api/returnitem/order/{id}")
+	@GetMapping("/api/returnitems/order/{id}")
 	private ResponseEntity<List<ReturnItemView>> getReturnItemByOrder(@PathVariable("id") Long orderId) {
 		List<ReturnItemView> items = service.findByOrderId(orderId).stream()
 				.map(returnItem -> service.mapToView(returnItem)).collect(Collectors.toList());

@@ -40,7 +40,7 @@ public class PlantController {
 		}
 	}
 	
-	@GetMapping("/api/plants/{id}")
+	@GetMapping("/api/plants/category/{id}")
 	private ResponseEntity<List<PlantView>> getPlants(@PathVariable("id") Long categoryId) {
 		List<PlantView> plants = service.findByCategoryId(categoryId).stream()
 				.map(plant -> service.mapToView(plant)).collect(Collectors.toList());

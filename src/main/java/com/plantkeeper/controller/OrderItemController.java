@@ -38,7 +38,7 @@ public class OrderItemController {
 		}
 	}
 	
-	@GetMapping("/api/orderitems/{id}")
+	@GetMapping("/api/orderitems/order/{id}")
 	private ResponseEntity<List<OrderItemView>> getOrderItems(@PathVariable("id") Long orderId) {
 		List<OrderItemView> items = service.findByOrderId(orderId).stream()
 				.map(item -> service.mapToView(item)).collect(Collectors.toList());
