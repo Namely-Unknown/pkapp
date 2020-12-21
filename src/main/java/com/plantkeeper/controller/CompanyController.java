@@ -2,6 +2,7 @@ package com.plantkeeper.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.plantkeeper.business.CompanyView;
 import com.plantkeeper.business.CustomerView;
 import com.plantkeeper.dto.CompanyDTO;
+import com.plantkeeper.service.AddressService;
 import com.plantkeeper.service.CompanyService;
 import com.plantkeeper.utils.KeyGenerator;
 
@@ -26,6 +29,9 @@ public class CompanyController {
 
 	@Autowired
 	private CompanyService service;
+	
+	@Autowired
+	private AddressService addressService;
 
 	@PostMapping("/api/company")
 	private ResponseEntity<CompanyDTO> addCompany(@RequestBody CompanyDTO dto) {
@@ -62,8 +68,16 @@ public class CompanyController {
 	}
 
 	@GetMapping("/api/customers/{id}")
-	private ResponseEntity<List<CompanyDTO>> getAllCustomers(@PathVariable Long id) {
-		return new ResponseEntity<>(null, HttpStatus.OK);
+	private ResponseEntity<List<CustomerView>> getAllCustomers(@PathVariable("id") Long companyId) {
+		
+		List<CustomerView> customers = service.findByCustomerOf(companyId).stream()
+				.map(customer -> service.mapToView(customer)).collect(Collectors.toList());
+		
+		for (CustomerView c : customers) {
+			c.setAddresses(addressService.findByCompanyId(c.getId()));
+		}
+		
+		return new ResponseEntity<>(customers, HttpStatus.OK);
 	}
 
 	// TODO: When returning a company, will get DTO from the service layer. Then

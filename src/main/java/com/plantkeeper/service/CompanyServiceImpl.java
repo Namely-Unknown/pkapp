@@ -1,6 +1,8 @@
 package com.plantkeeper.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +75,12 @@ public class CompanyServiceImpl implements CompanyService {
 		} else {
 			return Optional.empty();
 		}
+	}
+
+	@Override
+	public List<CompanyDTO> findByCustomerOf(Long companyId) {
+		return repository.findByCustomerOf(companyId).stream()
+				.map(this::mapToDTO).collect(Collectors.toList());
 	}
 
 }
