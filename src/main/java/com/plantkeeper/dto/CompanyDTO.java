@@ -1,9 +1,12 @@
 package com.plantkeeper.dto;
 
+import java.math.BigDecimal;
+
 public class CompanyDTO {
 
 	private Long id;
 	private String name;
+	private BigDecimal shipping;
 	private Long customerOf;
 	private String enrollmentKey;
 	
@@ -12,6 +15,12 @@ public class CompanyDTO {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public BigDecimal getShipping() {
+		return shipping;
+	}
+	public void setShipping(BigDecimal shipping) {
+		this.shipping = shipping;
 	}
 	public Long getCustomerOf() {
 		return customerOf;

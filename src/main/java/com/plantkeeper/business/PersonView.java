@@ -6,6 +6,7 @@ public class PersonView {
 	private Long companyId;
 	private String first;
 	private String last;
+	private String title;
 	private String email;
 	private String phone;
 	private boolean isAdmin;
@@ -35,6 +36,12 @@ public class PersonView {
 	}
 	public void setLast(String last) {
 		this.last = last;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public String getEmail() {
 		return email;

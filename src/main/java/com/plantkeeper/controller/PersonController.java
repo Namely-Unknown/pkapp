@@ -119,6 +119,7 @@ public class PersonController {
 			
 			person.setFirst(dto.getFirst());
 			person.setLast(dto.getLast());
+			person.setTitle(dto.getTitle());
 			person.setEmail(dto.getEmail());
 			person.setPhone(dto.getPhone());
 			

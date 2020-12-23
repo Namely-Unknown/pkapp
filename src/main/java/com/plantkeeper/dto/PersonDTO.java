@@ -6,6 +6,7 @@ public class PersonDTO {
 	private Long companyId;
 	private String first;
 	private String last;
+	private String title;
 	private String password;
 	private String password2;
 	private String enrollmentKey;
@@ -38,6 +39,12 @@ public class PersonDTO {
 	}
 	public void setLast(String last) {
 		this.last = last;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public String getPassword() {
 		return password;

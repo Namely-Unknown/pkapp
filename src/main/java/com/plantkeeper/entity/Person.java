@@ -12,6 +12,7 @@ public class Person {
 	private Long id;
 	private String first;
 	private String last;
+	private String title;
 	private String password;
 	private String email;
 	private String phone;
@@ -102,4 +103,11 @@ public class Person {
 	public void setOrders(List<CustomerOrder> orders) {
 		this.orders = orders;
 	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
 }

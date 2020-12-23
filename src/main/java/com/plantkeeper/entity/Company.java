@@ -1,5 +1,6 @@
 package com.plantkeeper.entity;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ public class Company {
 	@GeneratedValue
 	private Long id;
 	private String name;
+	private BigDecimal shipping;
 	private Long customerOf;
 	private String enrollmentKey;
 	
@@ -52,6 +54,14 @@ public class Company {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public BigDecimal getShipping() {
+		return shipping;
+	}
+
+	public void setShipping(BigDecimal shipping) {
+		this.shipping = shipping;
 	}
 
 	public Long getCustomerOf() {
