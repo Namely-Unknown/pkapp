@@ -50,9 +50,9 @@ public class AddressController {
 		return new ResponseEntity<>(service.findByCompanyId(companyId), HttpStatus.OK);
 	}
 
-	@PutMapping("/api/address/{id}")
-	private ResponseEntity<AddressDTO> editAddress(@RequestBody AddressDTO dto, @PathVariable Long id) {
-
+	@PutMapping("/api/address")
+	private ResponseEntity<AddressDTO> editAddress(@RequestBody AddressDTO dto) {
+		
 		return service.findById(dto.getId()).map(address -> {
 			address.setIsMain(dto.getIsMain());
 			address.setName(dto.getName());
@@ -72,6 +72,7 @@ public class AddressController {
 	 */
 	@DeleteMapping("/api/address")
 	private ResponseEntity<AddressDTO> delete(@RequestBody AddressDTO dto) {
+		
 		if (service.delete(dto)) {
 			return new ResponseEntity<>(null, HttpStatus.OK);
 		} else {
