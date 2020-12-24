@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.plantkeeper.business.CompanyView;
 import com.plantkeeper.business.CustomerView;
 import com.plantkeeper.dto.CompanyDTO;
 import com.plantkeeper.entity.Company;
@@ -81,6 +82,15 @@ public class CompanyServiceImpl implements CompanyService {
 	public List<CompanyDTO> findByCustomerOf(Long companyId) {
 		return repository.findByCustomerOf(companyId).stream()
 				.map(this::mapToDTO).collect(Collectors.toList());
+	}
+
+	@Override
+	public CompanyView mapToCompanyView(CompanyDTO dto) {
+		ModelMapper modelMapper = new ModelMapper();
+		CompanyView company = modelMapper.map(dto, CompanyView.class);
+		company.setAddresses(addressService.findByCompanyId(dto.getId()));
+		company.getAddresses().sort(new AddressMainSorting());
+		return company;
 	}
 
 }

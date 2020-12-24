@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,8 +23,8 @@ public class OrderItemController {
 	@Autowired
 	private OrderItemService service;
 	
-	@PutMapping("/api/orderitem")
-	private ResponseEntity<OrderItemView> getOrderItem(@RequestBody OrderItemDTO dto) {
+	@PostMapping("/api/orderitem")
+	private ResponseEntity<OrderItemView> addOrderItem(@RequestBody OrderItemDTO dto) {
 		return new ResponseEntity<>(service.mapToView(service.save(dto)), HttpStatus.CREATED);
 	}
 

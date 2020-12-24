@@ -48,10 +48,10 @@ public class CompanyController {
 	}
 
 	@GetMapping("/api/company/{id}")
-	private ResponseEntity<Optional<CompanyDTO>> getCompany(@PathVariable Long id) {
+	private ResponseEntity<CompanyView> getCompany(@PathVariable Long id) {
 		Optional<CompanyDTO> company = service.findById(id);
 		if (company.isPresent()) {
-			return new ResponseEntity<>(company, HttpStatus.OK);
+			return new ResponseEntity<>(service.mapToCompanyView(company.get()), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}
