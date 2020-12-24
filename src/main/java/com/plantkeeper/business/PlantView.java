@@ -3,10 +3,8 @@ package com.plantkeeper.business;
 public class PlantView {
 
 	private Long id;
-	private Long categoryId;
-	private String category;
 	private String name;
-	
+	private CategoryView category;
 	
 	public Long getId() {
 		return id;
@@ -14,16 +12,10 @@ public class PlantView {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Long getCategoryId() {
-		return categoryId;
-	}
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
-	}
-	public String getCategory() {
+	public CategoryView getCategory() {
 		return category;
 	}
-	public void setCategory(String category) {
+	public void setCategory(CategoryView category) {
 		this.category = category;
 	}
 	public String getName() {

@@ -9,8 +9,8 @@ public class ProductDTO {
 	private Long containerId;
 	private BigDecimal price;
 	private int skuInt;
-	
-	
+	private int unitsInStock;
+	private boolean discontinued;
 	
 	public Long getId() {
 		return id;
@@ -41,6 +41,18 @@ public class ProductDTO {
 	}
 	public void setSkuInt(int skuInt) {
 		this.skuInt = skuInt;
+	}
+	public int getUnitsInStock() {
+		return unitsInStock;
+	}
+	public void setUnitsInStock(int unitsInStock) {
+		this.unitsInStock = unitsInStock;
+	}
+	public boolean isDiscontinued() {
+		return discontinued;
+	}
+	public void setDiscontinued(boolean discontinued) {
+		this.discontinued = discontinued;
 	}
 	
 	

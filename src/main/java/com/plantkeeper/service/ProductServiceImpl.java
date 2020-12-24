@@ -20,6 +20,10 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductRepository repository;
+	@Autowired
+	private ContainerService containerService;
+	@Autowired
+	private PlantService plantService;
 	
 	public Product mapToEntity(ProductDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -57,6 +61,8 @@ public class ProductServiceImpl implements ProductService {
 	public ProductView mapToView(ProductDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
 		ProductView product = modelMapper.map(dto, ProductView.class);
+		product.setPlant(plantService.mapToView(plantService.findById(dto.getPlantId()).get()));
+		product.setContainer(containerService.mapToView(containerService.findById(dto.getContainerId()).get()));
 		return product;
 	}
 
@@ -64,8 +70,13 @@ public class ProductServiceImpl implements ProductService {
 	public Boolean delete(ProductDTO dto) {
 		long oldCount = repository.count();
 		repository.deleteById(dto.getId());
-		
 		return (oldCount - repository.count() == 1);
+	}
+
+	@Override
+	public int setNextSku(ProductDTO dto) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

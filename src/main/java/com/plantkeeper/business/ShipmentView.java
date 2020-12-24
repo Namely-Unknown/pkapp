@@ -5,9 +5,9 @@ import java.time.LocalDate;
 public class ShipmentView {
 
 	private Long id;
-	private Long shipperId;
 	private LocalDate ordered;
 	private LocalDate received;
+	private Long shipperId;
 	
 	
 	public Long getId() {

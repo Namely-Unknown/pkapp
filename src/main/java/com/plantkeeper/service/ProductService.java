@@ -13,4 +13,5 @@ public interface ProductService {
 	List<ProductDTO> findByCompanyId(Long id);
 	ProductView mapToView(ProductDTO dto);
 	Boolean delete(ProductDTO dto);
+	int setNextSku(ProductDTO dto);
 }

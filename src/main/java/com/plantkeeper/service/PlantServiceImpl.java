@@ -22,7 +22,7 @@ public class PlantServiceImpl implements PlantService {
 	@Autowired
 	private PlantRepository repository;
 	@Autowired
-	private CategoryRepository categoryRepo;
+	private CategoryService categoryService;
 	
 	public Plant mapToEntity(PlantDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -60,7 +60,7 @@ public class PlantServiceImpl implements PlantService {
 	public PlantView mapToView(PlantDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
 		PlantView plant = modelMapper.map(dto, PlantView.class);
-		plant.setCategory(categoryRepo.findById(plant.getCategoryId()).get().getName());
+		plant.setCategory(categoryService.mapToView(categoryService.findById(dto.getCategoryId()).get()));
 		return plant;
 	}
 

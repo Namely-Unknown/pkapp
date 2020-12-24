@@ -13,6 +13,8 @@ public class Product {
 	private Long id;
 	private BigDecimal price;
 	private int skuInt;
+	private int unitsInStock;
+	private boolean discontinued;
 	
 	@ManyToOne
 	@JoinColumn(name = "plant_id")
@@ -51,6 +53,16 @@ public class Product {
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+
+
+	public int getUnitsInStock() {
+		return unitsInStock;
+	}
+
+
+	public void setUnitsInStock(int unitsInStock) {
+		this.unitsInStock = unitsInStock;
 	}
 
 
@@ -101,5 +113,16 @@ public class Product {
 
 	public void setReceivedItems(List<ShipmentItem> receivedItems) {
 		this.receivedItems = receivedItems;
+	}
+
+
+	public boolean isDiscontinued() {
+		return discontinued;
+	}
+
+
+	public void setDiscontinued(boolean discontinued) {
+		this.discontinued = discontinued;
 	}	
+	
 }

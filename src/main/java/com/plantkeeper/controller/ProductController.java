@@ -27,13 +27,21 @@ public class ProductController {
 
 	@PostMapping("/api/product")
 	private ResponseEntity<ProductView> addProduct(@RequestBody ProductDTO dto){
+		//TODO: Look up the max value of a product skuInt in the table where the plant.category.id == product.plant.category.id
+		//TODO: If there is nothing already there, it will return null, otherwise it will be the number
+		// Figure out my skuInt
+		
+		// New items are automatically NOT discontinued
+		dto.setDiscontinued(false);
 		return new ResponseEntity<>(service.mapToView(service.save(dto)), HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/api/product/{id}")
 	private ResponseEntity<ProductView> getProduct(@PathVariable Long id) {
+		System.out.println(id);
 		Optional<ProductDTO> product = service.findById(id);
 		if (product.isPresent()) {
+			System.out.println(product.get().getPrice());
 			return new ResponseEntity<>(service.mapToView(product.get()), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);

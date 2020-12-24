@@ -5,9 +5,9 @@ import com.plantkeeper.utils.States;
 public class ShippingCoView {
 
 	private Long id;
-	private Long companyId;
 	private String name;
 	private States state;
+	private Long companyId;
 	
 	
 	public Long getId() {

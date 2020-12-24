@@ -6,8 +6,6 @@ public class CategoryView {
 	private String name;
 	private String skuPrefix;
 	
-	
-	
 	public Long getId() {
 		return id;
 	}
