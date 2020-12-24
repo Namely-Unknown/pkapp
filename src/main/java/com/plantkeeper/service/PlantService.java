@@ -11,6 +11,7 @@ public interface PlantService {
 	PlantDTO save(PlantDTO dto);
 	Optional<PlantDTO> findById(Long id);
 	List<PlantDTO> findByCategoryId(Long categoryId);
+	List<PlantDTO> findByCompanyId(Long companyId);
 	PlantView mapToView(PlantDTO dto);
 	Boolean delete(PlantDTO dto);
 }

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.plantkeeper.business.PlantView;
 import com.plantkeeper.dto.PlantDTO;
 import com.plantkeeper.entity.Plant;
+import com.plantkeeper.repository.CategoryRepository;
 import com.plantkeeper.repository.PlantRepository;
 
 @Service
@@ -20,6 +21,8 @@ public class PlantServiceImpl implements PlantService {
 
 	@Autowired
 	private PlantRepository repository;
+	@Autowired
+	private CategoryRepository categoryRepo;
 	
 	public Plant mapToEntity(PlantDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -57,7 +60,7 @@ public class PlantServiceImpl implements PlantService {
 	public PlantView mapToView(PlantDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
 		PlantView plant = modelMapper.map(dto, PlantView.class);
-		//TODO: Set any extra data
+		plant.setCategory(categoryRepo.findById(plant.getCategoryId()).get().getName());
 		return plant;
 	}
 
@@ -67,6 +70,13 @@ public class PlantServiceImpl implements PlantService {
 		repository.deleteById(dto.getId());
 		
 		return (oldCount - repository.count() == 1);
+	}
+
+	@Override
+	public List<PlantDTO> findByCompanyId(Long companyId) {
+		System.out.println("Made to Impl");
+		return repository.findByCompanyId(companyId).stream()
+				.map(this::mapToDTO).collect(Collectors.toList());
 	}
 	
 }

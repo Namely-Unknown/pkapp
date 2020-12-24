@@ -112,6 +112,8 @@ public class PersonController {
 	@PutMapping("/api/person")
 	private ResponseEntity<PersonView> editPerson(@RequestBody PersonDTO dto){
 		
+		System.out.println("Putting");
+		
 		Optional<CompanyDTO> company = companyService.findById(dto.getCompanyId());
 		if (company.isEmpty()) { return new ResponseEntity<>(null, HttpStatus.FAILED_DEPENDENCY); }
 		
