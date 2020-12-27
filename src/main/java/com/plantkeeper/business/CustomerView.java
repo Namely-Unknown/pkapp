@@ -11,6 +11,7 @@ public class CustomerView {
 	private String name;
 	private BigDecimal shipping;
 	private List<AddressDTO> addresses;
+	private List<PersonView> people;
 	
 	
 	public Long getId() {
@@ -36,5 +37,11 @@ public class CustomerView {
 	}
 	public void setAddresses(List<AddressDTO> addresses) {
 		this.addresses = addresses;
+	}
+	public List<PersonView> getPeople() {
+		return people;
+	}
+	public void setPeople(List<PersonView> people) {
+		this.people = people;
 	}
 }

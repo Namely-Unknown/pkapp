@@ -31,38 +31,30 @@ public class ShippingCo {
 	public Long getId() {
 		return id;
 	}
-
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-
 	public String getName() {
 		return name;
 	}
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
 	public States getState() {
 		return state;
 	}
-
-
 	public void setState(States state) {
 		this.state = state;
 	}
-
-
+	public Company getCompany() {
+		return company;
+	}
+	public void setCompany(Company company) {
+		this.company = company;
+	}
 	public List<Shipment> getShipments() {
 		return shipments;
 	}
-
-
 	public void setShipments(List<Shipment> shipments) {
 		this.shipments = shipments;
 	}

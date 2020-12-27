@@ -25,6 +25,9 @@ public class CompanyServiceImpl implements CompanyService {
 	
 	@Autowired
 	private AddressService addressService;
+	
+	@Autowired
+	private PersonService personService;
 
 	public Company mapToEntity(CompanyDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -58,6 +61,8 @@ public class CompanyServiceImpl implements CompanyService {
 		CustomerView cv = modelMapper.map(dto, CustomerView.class);
 		cv.setAddresses(addressService.findByCompanyId(dto.getId()));
 		cv.getAddresses().sort(new AddressMainSorting());
+		cv.setPeople(personService.findByCompanyId(dto.getId()).stream()
+				.map(person -> personService.mapToView(person)).collect(Collectors.toList()));
 		return cv;
 	}
 
@@ -90,6 +95,8 @@ public class CompanyServiceImpl implements CompanyService {
 		CompanyView company = modelMapper.map(dto, CompanyView.class);
 		company.setAddresses(addressService.findByCompanyId(dto.getId()));
 		company.getAddresses().sort(new AddressMainSorting());
+		company.setPeople(personService.findByCompanyId(dto.getId()).stream()
+				.map(person -> personService.mapToView(person)).collect(Collectors.toList()));
 		return company;
 	}
 

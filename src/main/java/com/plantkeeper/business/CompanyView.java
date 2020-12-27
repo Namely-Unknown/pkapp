@@ -8,6 +8,7 @@ public class CompanyView {
 
 	public Long id;
 	public String name;
+	private List<PersonView> people;
 	private List<AddressDTO> addresses;
 	
 	public CompanyView() {}
@@ -29,5 +30,13 @@ public class CompanyView {
 	}
 	public void setAddresses(List<AddressDTO> addresses) {
 		this.addresses = addresses;
+	}
+
+	public List<PersonView> getPeople() {
+		return people;
+	}
+
+	public void setPeople(List<PersonView> people) {
+		this.people = people;
 	}
 }
