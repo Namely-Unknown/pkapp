@@ -9,14 +9,16 @@ public class CustomerOrderView {
 
 	private Long id;
 	private Long customerId;
+	private CustomerView customer;
 	private Long personId;
 	private String poNumber;
 	private OrderStatus status;
 	private LocalDate created;
 	private LocalDate paidDate;
+	private int itemCount;
 	private BigDecimal received;
 	private BigDecimal shipping;
-	private BigDecimal subtotal;
+	private BigDecimal subTotal;
 	private BigDecimal returnedAmount;
 	
 	
@@ -74,17 +76,29 @@ public class CustomerOrderView {
 	public void setShipping(BigDecimal shipping) {
 		this.shipping = shipping;
 	}
-	public BigDecimal getSubtotal() {
-		return subtotal;
+	public BigDecimal getSubTotal() {
+		return subTotal;
 	}
-	public void setSubtotal(BigDecimal subtotal) {
-		this.subtotal = subtotal;
+	public void setSubTotal(BigDecimal subTotal) {
+		this.subTotal = subTotal;
 	}
 	public BigDecimal getReturnedAmount() {
 		return returnedAmount;
 	}
 	public void setReturnedAmount(BigDecimal returnedAmount) {
 		this.returnedAmount = returnedAmount;
+	}
+	public CustomerView getCustomer() {
+		return customer;
+	}
+	public void setCustomer(CustomerView customer) {
+		this.customer = customer;
+	}
+	public int getItemCount() {
+		return itemCount;
+	}
+	public void setItemCount(int itemCount) {
+		this.itemCount = itemCount;
 	}
 	
 }

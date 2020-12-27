@@ -29,6 +29,12 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 	@Autowired
 	private PersonRepository personRepo;
 	
+	@Autowired
+	private CompanyService companyService;
+	
+	@Autowired
+	private OrderItemService itemService;
+	
 //	@Autowired
 //	private OrderItemRepository orderItemRepo;
 //	
@@ -76,14 +82,24 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 	public CustomerOrderView mapToView(CustomerOrderDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
 		CustomerOrderView order = modelMapper.map(dto, CustomerOrderView.class);
+		order.setCustomer(companyService.mapToView(companyService.findById(dto.getCustomerId()).get()));
+		order.setItemCount(itemService.invoiceCount(dto.getId()));
+		order.setSubTotal(itemService.getOrderSubtotal(dto.getId()));
 		//TODO: Set the order.subtotal = orderItemRepo calc field to return sum of order
 		//TODO: Set the order.returnedAmount = orderItemRepo calc field to return sum of
 		return order;
 	}
 
 	@Override
-	public List<CustomerOrderDTO> findByCompanyId(Long customerId) {
+	public List<CustomerOrderDTO> findByCustomerId(Long customerId) {
 		return repository.findAllByCustomerId(customerId).stream().map(this::mapToDTO).collect(Collectors.toList());
 	}
 
+	@Override
+	public List<CustomerOrderDTO> findByCompanyId(Long companyId) {
+		return repository.findAllByCompanyId(companyId).stream().map(this::mapToDTO).collect(Collectors.toList());
+	}
+
+	
+	
 }

@@ -21,6 +21,12 @@ public class ShipmentServiceImpl implements ShipmentService {
 	@Autowired
 	private ShipmentRepository repository;
 	
+	@Autowired
+	private ShippingCoService shippingCoService;
+	
+	@Autowired
+	private ShipmentItemService shippingItemService;
+	
 	public Shipment mapToEntity(ShipmentDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
 		Shipment shipment = modelMapper.map(dto, Shipment.class);
@@ -64,7 +70,9 @@ public class ShipmentServiceImpl implements ShipmentService {
 	public ShipmentView mapToView(ShipmentDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
 		ShipmentView shipment = modelMapper.map(dto, ShipmentView.class);
-		//TODO: add any lookups needed
+		shipment.setShipper(shippingCoService.mapToView(shippingCoService.findById(dto.getShipperId()).get()));
+		shipment.setUnits(shippingItemService.countByShipmentId(dto.getId()));
+		shipment.setCost(shippingItemService.sumTotalByShipmentId(dto.getId()));
 		return shipment;
 	}
 

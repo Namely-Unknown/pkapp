@@ -1,5 +1,6 @@
 package com.plantkeeper.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,6 +21,9 @@ public class ShipmentItemServiceImpl implements ShipmentItemService {
 
 	@Autowired
 	private ShipmentItemRepository repository;
+	
+	@Autowired
+	private ProductService productService;
 	
 	public ShipmentItem mapToEntity(ShipmentItemDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -58,7 +62,7 @@ public class ShipmentItemServiceImpl implements ShipmentItemService {
 	public ShipmentItemView mapToView(ShipmentItemDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
 		ShipmentItemView item = modelMapper.map(dto, ShipmentItemView.class);
-		//TODO: Any things to set
+		item.setProduct(productService.mapToView(productService.findById(dto.getProductId()).get()));
 		return item;
 	}
 
@@ -68,6 +72,16 @@ public class ShipmentItemServiceImpl implements ShipmentItemService {
 		repository.deleteById(dto.getId());
 		
 		return (oldCount - repository.count() == 1);
+	}
+
+	@Override
+	public int countByShipmentId(Long shipmentId) {
+		return repository.countByShipmentId(shipmentId);
+	}
+
+	@Override
+	public BigDecimal sumTotalByShipmentId(Long id) {
+		return repository.sumTotalByShipmentId(id);
 	}
 	
 }

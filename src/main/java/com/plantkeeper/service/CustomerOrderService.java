@@ -9,7 +9,8 @@ import com.plantkeeper.dto.CustomerOrderDTO;
 public interface CustomerOrderService {
 
 	CustomerOrderDTO save(CustomerOrderDTO dto);
-	List<CustomerOrderDTO> findByCompanyId(Long customerId);
+	List<CustomerOrderDTO> findByCustomerId(Long customerId);
+	List<CustomerOrderDTO> findByCompanyId(Long companyId);
 	Optional<CustomerOrderDTO> findById(Long id);
 	CustomerOrderView mapToView(CustomerOrderDTO dto);
 	Boolean delete(CustomerOrderDTO dto);

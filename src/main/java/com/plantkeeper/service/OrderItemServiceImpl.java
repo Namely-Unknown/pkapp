@@ -1,5 +1,6 @@
 package com.plantkeeper.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +68,16 @@ public class OrderItemServiceImpl implements OrderItemService {
 		repository.deleteById(dto.getId());
 
 		return (oldCount - repository.count() == 1);
+	}
+
+	@Override
+	public int invoiceCount(Long orderId) {
+		return repository.invoiceCount(orderId);
+	}
+
+	@Override
+	public BigDecimal getOrderSubtotal(Long orderId) {
+		return repository.getOrderSubtotal(orderId);
 	}
 
 }

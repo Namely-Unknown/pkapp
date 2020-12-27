@@ -1,5 +1,6 @@
 package com.plantkeeper.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class ShipmentDTO {
@@ -8,7 +9,6 @@ public class ShipmentDTO {
 	private Long shipperId;
 	private LocalDate ordered;
 	private LocalDate received;
-	
 	
 	
 	public Long getId() {
@@ -34,7 +34,5 @@ public class ShipmentDTO {
 	}
 	public void setReceived(LocalDate received) {
 		this.received = received;
-	}
-	
-	
+	}	
 }

@@ -63,10 +63,11 @@ public class ShippingCoController {
 
 	@DeleteMapping("/api/shippingco")
 	private ResponseEntity<ShippingCoView> deleteShippingCo(@RequestBody ShippingCoDTO dto) {
+		System.out.println(dto);
 		if (service.delete(dto)) {
 			return new ResponseEntity<>(null, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(service.mapToView(dto), HttpStatus.OK);
+			return new ResponseEntity<>(service.mapToView(dto), HttpStatus.BAD_REQUEST);
 		}
 	}
 }

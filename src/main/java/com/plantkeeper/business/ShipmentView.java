@@ -1,5 +1,6 @@
 package com.plantkeeper.business;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class ShipmentView {
@@ -8,6 +9,9 @@ public class ShipmentView {
 	private LocalDate ordered;
 	private LocalDate received;
 	private Long shipperId;
+	private ShippingCoView shipper;
+	private BigDecimal cost;
+	private int units;
 	
 	
 	public Long getId() {
@@ -33,5 +37,23 @@ public class ShipmentView {
 	}
 	public void setReceived(LocalDate received) {
 		this.received = received;
-	}	
+	}
+	public ShippingCoView getShipper() {
+		return shipper;
+	}
+	public void setShipper(ShippingCoView shipper) {
+		this.shipper = shipper;
+	}
+	public BigDecimal getCost() {
+		return cost;
+	}
+	public void setCost(BigDecimal cost) {
+		this.cost = cost;
+	}
+	public int getUnits() {
+		return units;
+	}
+	public void setUnits(int units) {
+		this.units = units;
+	}
 }

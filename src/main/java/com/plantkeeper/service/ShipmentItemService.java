@@ -1,5 +1,6 @@
 package com.plantkeeper.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,5 +14,7 @@ public interface ShipmentItemService {
 	List<ShipmentItemDTO> findByShipmentId(Long shipmentId);
 	ShipmentItemView mapToView(ShipmentItemDTO dto);
 	Boolean delete(ShipmentItemDTO dto);
+	int countByShipmentId(Long shipmentId);
+	BigDecimal sumTotalByShipmentId(Long id);
 	
 }

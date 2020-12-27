@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.plantkeeper.business.CustomerOrderView;
 import com.plantkeeper.dto.CustomerOrderDTO;
 import com.plantkeeper.service.CustomerOrderService;
+import com.plantkeeper.utils.OrderStatus;
 
 @RestController
 public class CustomerOrderController {
@@ -27,6 +28,7 @@ public class CustomerOrderController {
 	
 	@PostMapping("/api/customerorder")
 	private ResponseEntity<CustomerOrderView> addOrder(@RequestBody CustomerOrderDTO dto){
+		dto.setStatus(OrderStatus.FULFILLED);
 		return new ResponseEntity<>(service.mapToView(service.save(dto)), HttpStatus.CREATED);
 	}
 	
@@ -41,8 +43,15 @@ public class CustomerOrderController {
 	}
 	
 	@GetMapping("/api/customerorders/customer/{id}")
-	private ResponseEntity<List<CustomerOrderView>> getAllOrders(@PathVariable("id") Long customerId){
-		List<CustomerOrderView> orders = service.findByCompanyId(customerId).stream()
+	private ResponseEntity<List<CustomerOrderView>> getCustomerOrders(@PathVariable("id") Long customerId){
+		List<CustomerOrderView> orders = service.findByCustomerId(customerId).stream()
+				.map(order -> service.mapToView(order)).collect(Collectors.toList());
+		return new ResponseEntity<>(orders, HttpStatus.OK);
+	}
+	
+	@GetMapping("/api/customerorders/company/{id}")
+	private ResponseEntity<List<CustomerOrderView>> getAllOrders(@PathVariable("id") Long companyId){
+		List<CustomerOrderView> orders = service.findByCompanyId(companyId).stream()
 				.map(order -> service.mapToView(order)).collect(Collectors.toList());
 		return new ResponseEntity<>(orders, HttpStatus.OK);
 	}

@@ -90,6 +90,7 @@ public class CompanyController {
 
 		return service.findById(dto.getId()).map(company -> {
 			company.setName(dto.getName());
+			company.setShipping(dto.getShipping());
 			return new ResponseEntity<>(service.save(company), HttpStatus.OK);
 		}).orElseGet(() -> {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

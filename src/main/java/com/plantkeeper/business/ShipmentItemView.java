@@ -8,6 +8,7 @@ public class ShipmentItemView {
 	private Long id;
 	private Long shipmentId;
 	private Long productId;
+	private ProductView product;
 	private BigDecimal unitPrice;
 	private int units;
 	
@@ -42,5 +43,12 @@ public class ShipmentItemView {
 	public void setUnits(int units) {
 		this.units = units;
 	}
+	public ProductView getProduct() {
+		return product;
+	}
+	public void setProduct(ProductView product) {
+		this.product = product;
+	}
+	
 
 }

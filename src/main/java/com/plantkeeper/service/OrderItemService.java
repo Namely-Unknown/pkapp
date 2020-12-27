@@ -1,5 +1,6 @@
 package com.plantkeeper.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,5 +14,6 @@ public interface OrderItemService {
 	List<OrderItemDTO> findByOrderId(Long id);
 	OrderItemView mapToView(OrderItemDTO dto);
 	Boolean delete(OrderItemDTO dto);
-	
+	int invoiceCount(Long orderId);
+	BigDecimal getOrderSubtotal(Long orderId);
 }
