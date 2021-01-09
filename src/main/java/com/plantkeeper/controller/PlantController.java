@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.plantkeeper.business.PlantDetailView;
 import com.plantkeeper.business.PlantView;
 import com.plantkeeper.dto.PlantDTO;
 import com.plantkeeper.service.PlantService;
@@ -31,10 +32,10 @@ public class PlantController {
 	}
 	
 	@GetMapping("/api/plant/{id}")
-	private ResponseEntity<PlantView> getPlant(@PathVariable Long id) {
+	private ResponseEntity<PlantDetailView> getPlant(@PathVariable Long id) {
 		Optional<PlantDTO> plant = service.findById(id);
 		if (plant.isPresent()) {
-			return new ResponseEntity<>(service.mapToView(plant.get()), HttpStatus.OK);
+			return new ResponseEntity<>(service.mapToDetail(plant.get()), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}

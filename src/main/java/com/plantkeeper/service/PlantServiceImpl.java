@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.plantkeeper.business.PlantDetailView;
 import com.plantkeeper.business.PlantTimeData;
 import com.plantkeeper.business.PlantView;
 import com.plantkeeper.dto.OrderItemDTO;
@@ -54,7 +55,15 @@ public class PlantServiceImpl implements PlantService {
 		return plant;
 	}
 	
-	
+	@Override
+	public PlantDetailView mapToDetail(PlantDTO dto) {
+		Optional<Plant> plantEntity = repository.findById(dto.getId());
+		ModelMapper modelMapper = new ModelMapper();
+		PlantDetailView plant = modelMapper.map(dto, PlantDetailView.class);
+		plant.setCategory(categoryService.mapToView(categoryService.findById(dto.getCategoryId()).get()));
+		plant.setProductCount(plantEntity.get().getProducts().stream().filter(c -> !c.isDiscontinued()).count());
+		return plant;
+	}
 
 	@Override
 	public PlantDTO save(PlantDTO dto) {
@@ -90,6 +99,5 @@ public class PlantServiceImpl implements PlantService {
 		System.out.println("Made to Impl");
 		return repository.findByCompanyId(companyId).stream()
 				.map(this::mapToDTO).collect(Collectors.toList());
-	}
-	
+	}	
 }
