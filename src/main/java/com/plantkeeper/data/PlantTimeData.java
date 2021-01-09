@@ -1,4 +1,4 @@
-package com.plantkeeper.business;
+package com.plantkeeper.data;
 
 import java.math.BigDecimal;
 
@@ -9,6 +9,12 @@ public class PlantTimeData {
 	private int unitsSold;
 	private int unitsReturned;
 	
+	public PlantTimeData() {
+		this.revenueSold = new BigDecimal("0.00");
+		this.revenueReturned = new BigDecimal("0.00");
+		this.unitsSold = 0;
+		this.unitsReturned = 0;
+	}
 	
 	public BigDecimal getRevenueSold() {
 		return revenueSold;

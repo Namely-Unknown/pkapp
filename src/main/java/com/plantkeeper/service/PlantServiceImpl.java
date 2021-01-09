@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.plantkeeper.business.PlantDetailView;
-import com.plantkeeper.business.PlantTimeData;
 import com.plantkeeper.business.PlantView;
+import com.plantkeeper.data.PlantTimeData;
 import com.plantkeeper.dto.OrderItemDTO;
 import com.plantkeeper.dto.PlantDTO;
 import com.plantkeeper.entity.OrderItem;
@@ -62,6 +62,8 @@ public class PlantServiceImpl implements PlantService {
 		PlantDetailView plant = modelMapper.map(dto, PlantDetailView.class);
 		plant.setCategory(categoryService.mapToView(categoryService.findById(dto.getCategoryId()).get()));
 		plant.setProductCount(plantEntity.get().getProducts().stream().filter(c -> !c.isDiscontinued()).count());
+		
+		
 		return plant;
 	}
 
