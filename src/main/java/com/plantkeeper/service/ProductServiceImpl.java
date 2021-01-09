@@ -36,6 +36,15 @@ public class ProductServiceImpl implements ProductService {
 		ProductDTO dto = modelMapper.map(product, ProductDTO.class);
 		return dto;
 	}
+	
+	@Override
+	public ProductView mapToView(ProductDTO dto) {
+		ModelMapper modelMapper = new ModelMapper();
+		ProductView product = modelMapper.map(dto, ProductView.class);
+		product.setPlant(plantService.mapToView(plantService.findById(dto.getPlantId()).get()));
+		product.setContainer(containerService.mapToView(containerService.findById(dto.getContainerId()).get()));
+		return product;
+	}
 
 	@Override
 	public ProductDTO save(ProductDTO dto) {
@@ -58,15 +67,6 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ProductView mapToView(ProductDTO dto) {
-		ModelMapper modelMapper = new ModelMapper();
-		ProductView product = modelMapper.map(dto, ProductView.class);
-		product.setPlant(plantService.mapToView(plantService.findById(dto.getPlantId()).get()));
-		product.setContainer(containerService.mapToView(containerService.findById(dto.getContainerId()).get()));
-		return product;
-	}
-
-	@Override
 	public Boolean delete(ProductDTO dto) {
 		long oldCount = repository.count();
 		repository.deleteById(dto.getId());
@@ -83,8 +83,9 @@ public class ProductServiceImpl implements ProductService {
 		} else {
 			return currentNum.get().intValue() + 1;
 		}
-		
 	}
+
+	
 	
 	
 }

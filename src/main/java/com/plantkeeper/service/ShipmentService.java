@@ -14,4 +14,5 @@ public interface ShipmentService {
 	List<ShipmentDTO> findByShipperId(Long shipperId);
 	ShipmentView mapToView(ShipmentDTO dto);
 	Boolean delete(ShipmentDTO dto);
+	Boolean receiveShipment(Long id);
 }

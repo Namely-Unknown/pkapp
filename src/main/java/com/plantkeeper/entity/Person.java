@@ -18,6 +18,10 @@ public class Person {
 	private String phone;
 	private boolean isAdmin;
 	
+//	@OneToOne
+//	@JoinColumn(name = "settingsId", referencedColumnName= "id")
+//	private UserSettings settings;
+	
 	@ManyToOne
 	@JoinColumn(name = "company_id")
 	private Company company;
@@ -109,5 +113,11 @@ public class Person {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+//	public UserSettings getSettings() {
+//		return settings;
+//	}
+//	public void setSettings(UserSettings settings) {
+//		this.settings = settings;
+//	}
 	
 }

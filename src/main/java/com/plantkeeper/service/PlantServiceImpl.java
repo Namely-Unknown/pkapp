@@ -1,5 +1,6 @@
 package com.plantkeeper.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.plantkeeper.business.PlantTimeData;
 import com.plantkeeper.business.PlantView;
+import com.plantkeeper.dto.OrderItemDTO;
 import com.plantkeeper.dto.PlantDTO;
+import com.plantkeeper.entity.OrderItem;
 import com.plantkeeper.entity.Plant;
 import com.plantkeeper.repository.CategoryRepository;
 import com.plantkeeper.repository.PlantRepository;
@@ -23,6 +27,10 @@ public class PlantServiceImpl implements PlantService {
 	private PlantRepository repository;
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private ProductService productService;
+	@Autowired
+	private OrderItemService orderItemService;
 	
 	public Plant mapToEntity(PlantDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -35,6 +43,18 @@ public class PlantServiceImpl implements PlantService {
 		PlantDTO dto = modelMapper.map(plant, PlantDTO.class);
 		return dto;
 	}
+	
+	@Override
+	public PlantView mapToView(PlantDTO dto) {
+		Optional<Plant> plantEntity = repository.findById(dto.getId());
+		ModelMapper modelMapper = new ModelMapper();
+		PlantView plant = modelMapper.map(dto, PlantView.class);
+		plant.setCategory(categoryService.mapToView(categoryService.findById(dto.getCategoryId()).get()));
+		//plant.setProductCount(plantEntity.get().getProducts().stream().filter(c -> !c.isDiscontinued()).count());
+		return plant;
+	}
+	
+	
 
 	@Override
 	public PlantDTO save(PlantDTO dto) {
@@ -56,13 +76,6 @@ public class PlantServiceImpl implements PlantService {
 		return repository.findByCategoryId(categoryId).stream().map(this::mapToDTO).collect(Collectors.toList());
 	}
 
-	@Override
-	public PlantView mapToView(PlantDTO dto) {
-		ModelMapper modelMapper = new ModelMapper();
-		PlantView plant = modelMapper.map(dto, PlantView.class);
-		plant.setCategory(categoryService.mapToView(categoryService.findById(dto.getCategoryId()).get()));
-		return plant;
-	}
 
 	@Override
 	public Boolean delete(PlantDTO dto) {

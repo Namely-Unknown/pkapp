@@ -16,4 +16,5 @@ public interface OrderItemService {
 	Boolean delete(OrderItemDTO dto);
 	int invoiceCount(Long orderId);
 	BigDecimal getOrderSubtotal(Long orderId);
+	List<OrderItemDTO> findByPlantId(Long plantId);
 }

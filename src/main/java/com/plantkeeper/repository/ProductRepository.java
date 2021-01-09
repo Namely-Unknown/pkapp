@@ -22,5 +22,4 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 			+ "JOIN Category cat ON plant.category = cat.id "
 			+ "WHERE cat.id = :categoryId")
 	Optional<Integer> findNextSkuInt(@Param("categoryId") Long categoryId);
-	
 }

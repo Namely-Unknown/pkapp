@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.plantkeeper.business.OrderItemView;
 import com.plantkeeper.dto.OrderItemDTO;
+import com.plantkeeper.dto.ProductDTO;
 import com.plantkeeper.entity.OrderItem;
 import com.plantkeeper.repository.OrderItemRepository;
 
@@ -39,6 +40,10 @@ public class OrderItemServiceImpl implements OrderItemService {
 
 	@Override
 	public OrderItemDTO save(OrderItemDTO dto) {
+		// Need to update the product count to keep it in line
+		ProductDTO product = productService.findById(dto.getProductId()).get();
+		product.setUnitsInStock(product.getUnitsInStock() - dto.getUnits());
+		productService.save(product);
 		return mapToDTO(repository.save(mapToEntity(dto)));
 	}
 
@@ -88,6 +93,12 @@ public class OrderItemServiceImpl implements OrderItemService {
 	@Override
 	public BigDecimal getOrderSubtotal(Long orderId) {
 		return repository.getOrderSubtotal(orderId);
+	}
+
+	@Override
+	public List<OrderItemDTO> findByPlantId(Long plantId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

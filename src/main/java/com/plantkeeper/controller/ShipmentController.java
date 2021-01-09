@@ -58,6 +58,16 @@ public class ShipmentController {
 		return new ResponseEntity<>(shipments, HttpStatus.OK);
 	}
 	
+	@PutMapping("/api/shipmentreceived")
+	private ResponseEntity<ShipmentView> receivedShipment(@RequestBody ShipmentDTO dto){
+		
+		if (service.receiveShipment(dto.getId())) {
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+		}		
+	}
+	
 	@PutMapping("/api/shipment")
 	private ResponseEntity<ShipmentView> editShipment(@RequestBody ShipmentDTO dto){
 		
