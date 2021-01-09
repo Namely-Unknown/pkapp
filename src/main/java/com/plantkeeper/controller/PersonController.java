@@ -46,7 +46,11 @@ public class PersonController {
 		
 		// TODO: Create EnrollmentKeyNotFoundError to throw
 		Optional<CompanyDTO> company = companyService.findByEnrollmentKey(dto.getEnrollmentKey());
-		if (company.isEmpty()) throw new BadEnrollmentKeyException();
+		if (company.isEmpty()) {
+			throw new BadEnrollmentKeyException();
+		} else {
+			dto.setCompanyId(company.get().getId());
+		}
 		
 		if (dto.getEmail().isEmpty() || dto.getFirst().isEmpty() || dto.getLast().isEmpty() || dto.getPassword().isEmpty()) return new ResponseEntity<>(null, HttpStatus.FAILED_DEPENDENCY);
 		
