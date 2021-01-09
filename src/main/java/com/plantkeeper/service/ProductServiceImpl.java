@@ -75,8 +75,15 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public int setNextSku(ProductDTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		Optional<Integer> currentNum = repository.findNextSkuInt(plantService.findById(dto.getPlantId()).get().getCategoryId());
+		
+		if (currentNum.isEmpty()) {
+			return 1;
+		} else {
+			return currentNum.get().intValue() + 1;
+		}
+		
 	}
 	
 	

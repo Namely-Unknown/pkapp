@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.plantkeeper.business.ShipmentView;
 import com.plantkeeper.dto.ShipmentDTO;
 import com.plantkeeper.service.ShipmentService;
+import com.plantkeeper.utils.ShipmentStatus;
 
 @RestController
 public class ShipmentController {
@@ -27,6 +28,7 @@ public class ShipmentController {
 
 	@PostMapping("/api/shipment")
 	private ResponseEntity<ShipmentView> addShipment(@RequestBody ShipmentDTO dto){
+		dto.setStatus(ShipmentStatus.ORDERED);
 		return new ResponseEntity<>(service.mapToView(service.save(dto)), HttpStatus.CREATED);
 	}
 	

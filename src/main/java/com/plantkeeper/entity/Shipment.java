@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.plantkeeper.utils.ShipmentStatus;
+
 @Entity
 public class Shipment {
 
@@ -14,6 +16,7 @@ public class Shipment {
 	private Long id;
 	private LocalDate ordered;
 	private LocalDate received;
+	private ShipmentStatus status;
 	
 	@ManyToOne
 	@JoinColumn(name = "shipper_id")
@@ -57,5 +60,11 @@ public class Shipment {
 	}
 	public void setItems(List<ShipmentItem> items) {
 		this.items = items;
+	}
+	public ShipmentStatus getStatus() {
+		return status;
+	}
+	public void setStatus(ShipmentStatus status) {
+		this.status = status;
 	}
 }

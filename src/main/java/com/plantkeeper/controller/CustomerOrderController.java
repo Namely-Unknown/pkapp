@@ -33,10 +33,10 @@ public class CustomerOrderController {
 	}
 	
 	@GetMapping("/api/customerorder/{id}")
-	private ResponseEntity<Optional<CustomerOrderDTO>> getOrder(@PathVariable Long id){
+	private ResponseEntity<CustomerOrderView> getOrder(@PathVariable Long id){
 		Optional<CustomerOrderDTO> customerOrder = service.findById(id);
 		if(customerOrder.isPresent()) {
-			return new ResponseEntity<>(customerOrder, HttpStatus.OK);
+			return new ResponseEntity<>(service.mapToView(customerOrder.get()), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}

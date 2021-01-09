@@ -1,15 +1,16 @@
 package com.plantkeeper.dto;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import com.plantkeeper.utils.ShipmentStatus;
 
 public class ShipmentDTO {
 
 	private Long id;
 	private Long shipperId;
+	private ShipmentStatus status;
 	private LocalDate ordered;
 	private LocalDate received;
-	
 	
 	public Long getId() {
 		return id;
@@ -34,5 +35,11 @@ public class ShipmentDTO {
 	}
 	public void setReceived(LocalDate received) {
 		this.received = received;
+	}
+	public ShipmentStatus getStatus() {
+		return status;
+	}
+	public void setStatus(ShipmentStatus status) {
+		this.status = status;
 	}	
 }

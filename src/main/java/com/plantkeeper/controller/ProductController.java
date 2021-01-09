@@ -33,6 +33,7 @@ public class ProductController {
 		
 		// New items are automatically NOT discontinued
 		dto.setDiscontinued(false);
+		dto.setSkuInt(service.setNextSku(dto));
 		return new ResponseEntity<>(service.mapToView(service.save(dto)), HttpStatus.CREATED);
 	}
 	

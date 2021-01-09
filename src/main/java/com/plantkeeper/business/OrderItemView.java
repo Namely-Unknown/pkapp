@@ -7,6 +7,8 @@ public class OrderItemView {
 	private Long id;
 	private int units;
 	private BigDecimal unitPrice;
+	private Long productId;
+	private ProductView product;
 	// TODO: Might want returned items in this
 	
 	
@@ -27,6 +29,18 @@ public class OrderItemView {
 	}
 	public void setUnitPrice(BigDecimal unitPrice) {
 		this.unitPrice = unitPrice;
+	}
+	public Long getProductId() {
+		return productId;
+	}
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
+	public ProductView getProduct() {
+		return product;
+	}
+	public void setProduct(ProductView product) {
+		this.product = product;
 	}
 	
 	

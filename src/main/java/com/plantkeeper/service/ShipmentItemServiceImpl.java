@@ -76,7 +76,12 @@ public class ShipmentItemServiceImpl implements ShipmentItemService {
 
 	@Override
 	public int countByShipmentId(Long shipmentId) {
-		return repository.countByShipmentId(shipmentId);
+		Optional<Integer> countInt = repository.countByShipmentId(shipmentId);
+		if (countInt.isPresent()) {
+			return countInt.get();
+		} else {
+			return 0;
+		}
 	}
 
 	@Override

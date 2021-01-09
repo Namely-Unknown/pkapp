@@ -3,10 +3,13 @@ package com.plantkeeper.business;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.plantkeeper.utils.ShipmentStatus;
+
 public class ShipmentView {
 
 	private Long id;
 	private LocalDate ordered;
+	private ShipmentStatus status;
 	private LocalDate received;
 	private Long shipperId;
 	private ShippingCoView shipper;
@@ -55,5 +58,11 @@ public class ShipmentView {
 	}
 	public void setUnits(int units) {
 		this.units = units;
+	}
+	public ShipmentStatus getStatus() {
+		return status;
+	}
+	public void setStatus(ShipmentStatus status) {
+		this.status = status;
 	}
 }

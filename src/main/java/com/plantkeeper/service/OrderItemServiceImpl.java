@@ -3,6 +3,7 @@ package com.plantkeeper.service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class OrderItemServiceImpl implements OrderItemService {
 
 	@Autowired
 	private OrderItemRepository repository;
+	
+	@Autowired
+	private ProductService productService;
 
 	public OrderItem mapToEntity(OrderItemDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -50,14 +54,15 @@ public class OrderItemServiceImpl implements OrderItemService {
 
 	@Override
 	public List<OrderItemDTO> findByOrderId(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findAllByOrderId(id).stream()
+				.map(this::mapToDTO).collect(Collectors.toList());
 	}
 
 	@Override
 	public OrderItemView mapToView(OrderItemDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
 		OrderItemView item = modelMapper.map(dto, OrderItemView.class);
+		item.setProduct(productService.mapToView(productService.findById(dto.getProductId()).get()));
 		// TODO: calculate fields as needed
 		return item;
 	}
@@ -72,7 +77,12 @@ public class OrderItemServiceImpl implements OrderItemService {
 
 	@Override
 	public int invoiceCount(Long orderId) {
-		return repository.invoiceCount(orderId);
+		Optional<Integer> countInt = repository.invoiceCount(orderId);
+		if (countInt.isPresent()) {
+			return countInt.get().intValue();
+		} else {
+			return 0;
+		}
 	}
 
 	@Override

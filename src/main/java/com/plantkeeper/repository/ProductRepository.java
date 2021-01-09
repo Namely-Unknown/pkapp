@@ -1,6 +1,7 @@
 package com.plantkeeper.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 			+ "WHERE co.id = :companyId ORDER BY p.id ASC")
 	List<Product> findByCompanyId(@Param("companyId") Long id);
 
+	@Query("SELECT MAX(p.skuInt) FROM Product p "
+			+ "JOIN Plant plant ON p.plant = plant.id "
+			+ "JOIN Category cat ON plant.category = cat.id "
+			+ "WHERE cat.id = :categoryId")
+	Optional<Integer> findNextSkuInt(@Param("categoryId") Long categoryId);
+	
 }
