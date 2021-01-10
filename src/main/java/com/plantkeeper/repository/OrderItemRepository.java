@@ -20,4 +20,5 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 	BigDecimal getOrderSubtotal(@Param("orderId") Long orderId);
 
 	List<OrderItem> findAllByOrderId(Long id);
+
 }

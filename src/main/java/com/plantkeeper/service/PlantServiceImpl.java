@@ -1,6 +1,7 @@
 package com.plantkeeper.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -15,9 +16,11 @@ import com.plantkeeper.business.PlantView;
 import com.plantkeeper.data.PlantTimeData;
 import com.plantkeeper.dto.OrderItemDTO;
 import com.plantkeeper.dto.PlantDTO;
+import com.plantkeeper.entity.CustomerOrder;
 import com.plantkeeper.entity.OrderItem;
 import com.plantkeeper.entity.Plant;
 import com.plantkeeper.repository.CategoryRepository;
+import com.plantkeeper.repository.CustomerOrderRepository;
 import com.plantkeeper.repository.PlantRepository;
 
 @Service
@@ -31,7 +34,7 @@ public class PlantServiceImpl implements PlantService {
 	@Autowired
 	private ProductService productService;
 	@Autowired
-	private OrderItemService orderItemService;
+	private CustomerOrderRepository orderRepository;
 	
 	public Plant mapToEntity(PlantDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -51,7 +54,6 @@ public class PlantServiceImpl implements PlantService {
 		ModelMapper modelMapper = new ModelMapper();
 		PlantView plant = modelMapper.map(dto, PlantView.class);
 		plant.setCategory(categoryService.mapToView(categoryService.findById(dto.getCategoryId()).get()));
-		//plant.setProductCount(plantEntity.get().getProducts().stream().filter(c -> !c.isDiscontinued()).count());
 		return plant;
 	}
 	
@@ -63,6 +65,9 @@ public class PlantServiceImpl implements PlantService {
 		plant.setCategory(categoryService.mapToView(categoryService.findById(dto.getCategoryId()).get()));
 		plant.setProductCount(plantEntity.get().getProducts().stream().filter(c -> !c.isDiscontinued()).count());
 		
+		//TODO: Set a local arraylist, build it out, then return it to the plant
+		ArrayList<PlantTimeData> timeData = new ArrayList<PlantTimeData>();
+		List<CustomerOrder> orders = orderRepository.findAllByCompanyId(plantEntity.get().getCategory().getCompany().getId());
 		
 		return plant;
 	}

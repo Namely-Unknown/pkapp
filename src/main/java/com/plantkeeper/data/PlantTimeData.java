@@ -3,17 +3,17 @@ package com.plantkeeper.data;
 import java.math.BigDecimal;
 
 public class PlantTimeData {
-	
+
 	private BigDecimal revenueSold;
 	private BigDecimal revenueReturned;
-	private int unitsSold;
-	private int unitsReturned;
+	private int soldCount;
+	private int returnCount;
 	
-	public PlantTimeData() {
-		this.revenueSold = new BigDecimal("0.00");
+	public PlantTimeData() {	
 		this.revenueReturned = new BigDecimal("0.00");
-		this.unitsSold = 0;
-		this.unitsReturned = 0;
+		this.revenueSold = new BigDecimal("0.00");
+		this.soldCount = 0;
+		this.returnCount = 0;
 	}
 	
 	public BigDecimal getRevenueSold() {
@@ -28,17 +28,16 @@ public class PlantTimeData {
 	public void setRevenueReturned(BigDecimal revenueReturned) {
 		this.revenueReturned = revenueReturned;
 	}
-	public int getUnitsSold() {
-		return unitsSold;
+	public int getSoldCount() {
+		return soldCount;
 	}
-	public void setUnitsSold(int unitsSold) {
-		this.unitsSold = unitsSold;
+	public void setSoldCount(int soldCount) {
+		this.soldCount = soldCount;
 	}
-	public int getUnitsReturned() {
-		return unitsReturned;
+	public int getReturnCount() {
+		return returnCount;
 	}
-	public void setUnitsReturned(int unitsReturned) {
-		this.unitsReturned = unitsReturned;
-	}
-	
+	public void setReturnCount(int returnCount) {
+		this.returnCount = returnCount;
+	}	
 }
