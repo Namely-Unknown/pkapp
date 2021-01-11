@@ -20,5 +20,14 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 	BigDecimal getOrderSubtotal(@Param("orderId") Long orderId);
 
 	List<OrderItem> findAllByOrderId(Long id);
+	
+	@Query("SELECT oi " + 
+			"FROM Plant pl JOIN Product pr ON pr.plant = pl.id " + 
+			"JOIN OrderItem oi ON oi.product = pr.id " + 
+			"JOIN CustomerOrder c ON oi.order = c.id " + 
+			"JOIN Company co ON c.customer = co.id " + 
+			"WHERE pl.id = :plantId AND co.customerOf = :companyId " +
+			"ORDER BY c.created ASC")
+	List<OrderItem> findAllByPlantId(@Param("plantId") Long plantId, @Param("companyId") Long companyId);
 
 }
