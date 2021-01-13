@@ -1,6 +1,5 @@
 package com.plantkeeper.service;
 
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -56,17 +55,25 @@ public class PlantServiceImpl implements PlantService {
 		PlantDetailView plant = modelMapper.map(dto, PlantDetailView.class);
 		plant.setCategory(categoryService.mapToView(categoryService.findById(dto.getCategoryId()).get()));
 		plant.setProductCount(plantEntity.get().getProducts().stream().filter(c -> !c.isDiscontinued()).count());
-		
+
 		// Get a list of items sold for this plant
-		List<OrderItem> itemList = repository.findOrderItemsByPlantId(plant.getId(), plantEntity.get().getCategory().getCompany().getId()); 
-		
-		// Send them to the plantview
-		plant.setData(DataSetter.setDataList(itemList));
-		
-		// Extract the last purchase
-		plant.setLastOrder(orderService.mapToView(orderService.findById(
-				itemList.get(itemList.size()-1).getOrder().getId()).get()));
-		
+		List<OrderItem> itemList = repository.findOrderItemsByPlantId(plant.getId(),
+				plantEntity.get().getCategory().getCompany().getId());
+
+		if (itemList.size() == 0) {
+			plant.setData(null);
+			plant.setLastOrder(null);
+		} else {
+
+			// Send them to the plantview
+			plant.setData(DataSetter.setDataList(itemList));
+
+			// Extract the last purchase
+			plant.setLastOrder(orderService
+					.mapToView(orderService.findById(itemList.get(itemList.size() - 1).getOrder().getId()).get()));
+
+		}
+
 		return plant;
 	}
 

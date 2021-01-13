@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.plantkeeper.business.ContainerDetailView;
 import com.plantkeeper.business.ContainerView;
 import com.plantkeeper.dto.ContainerDTO;
 import com.plantkeeper.exception.ContainerNotFoundException;
@@ -35,10 +36,10 @@ public class ContainerController {
 	}
 
 	@GetMapping("/api/container/{id}")
-	private ResponseEntity<Optional<ContainerView>> getContainer(@PathVariable Long id) {
+	private ResponseEntity<Optional<ContainerDetailView>> getContainer(@PathVariable Long id) {
 		Optional<ContainerDTO> container = service.findById(id);
 		if (container.isPresent()) {
-			return new ResponseEntity<>(Optional.ofNullable(service.mapToView(container.get())), HttpStatus.OK);
+			return new ResponseEntity<>(Optional.ofNullable(service.mapToDetail(container.get())), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}
@@ -51,8 +52,8 @@ public class ContainerController {
 		return new ResponseEntity<>(containers, HttpStatus.OK);
 	}
 
-	@PutMapping("/api/container/{id}")
-	private ResponseEntity<ContainerView> editContainer(@RequestBody ContainerDTO dto, @PathVariable Long id) {
+	@PutMapping("/api/container")
+	private ResponseEntity<ContainerView> editContainer(@RequestBody ContainerDTO dto) {
 
 		return service.findById(dto.getId()).map(container -> {
 			container.setName(dto.getName());

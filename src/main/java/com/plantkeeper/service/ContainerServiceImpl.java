@@ -9,9 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.plantkeeper.business.ContainerDetailView;
 import com.plantkeeper.business.ContainerView;
+import com.plantkeeper.data.DataSetter;
 import com.plantkeeper.dto.ContainerDTO;
 import com.plantkeeper.entity.Container;
+import com.plantkeeper.entity.OrderItem;
 import com.plantkeeper.repository.CompanyRepository;
 import com.plantkeeper.repository.ContainerRepository;
 
@@ -25,6 +28,9 @@ public class ContainerServiceImpl implements ContainerService {
 	@Autowired
 	private CompanyRepository companyRepo;
 	
+	@Autowired
+	private CustomerOrderService orderService;
+	
 	private Container mapToEntity(ContainerDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
 		Container container = modelMapper.map(dto, Container.class);
@@ -36,6 +42,29 @@ public class ContainerServiceImpl implements ContainerService {
 		ModelMapper modelMapper = new ModelMapper();
 		ContainerDTO dto = modelMapper.map(container, ContainerDTO.class);
 		return dto;
+	}
+
+	@Override
+	public ContainerDetailView mapToDetail(ContainerDTO dto) {
+		Container entity = repository.findById(dto.getId()).get();
+		ModelMapper modelMapper = new ModelMapper();
+		ContainerDetailView detail = modelMapper.map(dto, ContainerDetailView.class);
+		detail.setProductCount(entity.getProducts().size());
+		
+		// Get a list of the items sold
+		List<OrderItem> itemList = repository.findOrderItemsByContainerId(dto.getId(), entity.getCompany().getId());
+		
+		if (itemList.size() == 0) {
+			detail.setData(null);
+			detail.setLastOrder(null);
+		} else {
+			detail.setData(DataSetter.setDataList(itemList));
+			
+			detail.setLastOrder(orderService.mapToView(orderService.findById(
+					itemList.get(itemList.size() - 1).getOrder().getId()).get()));
+		}
+		
+		return detail;
 	}
 	
 	@Override

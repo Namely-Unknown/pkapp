@@ -49,8 +49,8 @@ public class CategoryController {
 		return new ResponseEntity<>(categories, HttpStatus.OK);
 	}
 
-	@PutMapping("/api/category/{id}")
-	private ResponseEntity<CategoryView> editCategory(@RequestBody CategoryDTO dto, @PathVariable Long id) {
+	@PutMapping("/api/category")
+	private ResponseEntity<CategoryView> editCategory(@RequestBody CategoryDTO dto) {
 
 		return service.findById(dto.getId()).map(category -> {
 			category.setName(dto.getName());
