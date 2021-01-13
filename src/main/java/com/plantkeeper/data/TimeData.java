@@ -2,20 +2,20 @@ package com.plantkeeper.data;
 
 import java.math.BigDecimal;
 
-public class PlantTimeData {
+public class TimeData {
 
 	private BigDecimal sales;
 	private BigDecimal returned;
 	private int units;
 	private int returnCount;
 	
-	public PlantTimeData() {	
+	public TimeData() {
 		this.returned = new BigDecimal("0.00");
 		this.sales = new BigDecimal("0.00");
 		this.units = 0;
 		this.returnCount = 0;
 	}
-	
+
 	public BigDecimal getSales() {
 		return sales;
 	}
@@ -39,7 +39,7 @@ public class PlantTimeData {
 	}
 	public void setReturnCount(int returnCount) {
 		this.returnCount = returnCount;
-	}	
+	}
 	public void addSales(BigDecimal addSales) {
 		this.sales = this.sales.add(addSales);
 	}
@@ -52,4 +52,5 @@ public class PlantTimeData {
 	public void addReturnCount(int addedReturnCount) {
 		this.returnCount += addedReturnCount;
 	}
+	
 }

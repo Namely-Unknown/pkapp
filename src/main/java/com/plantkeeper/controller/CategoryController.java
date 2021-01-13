@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.plantkeeper.business.CategoryDetailView;
 import com.plantkeeper.business.CategoryView;
 import com.plantkeeper.dto.CategoryDTO;
 import com.plantkeeper.service.CategoryService;
@@ -32,10 +33,10 @@ public class CategoryController {
 	}
 
 	@GetMapping("/api/category/{id}")
-	private ResponseEntity<Optional<CategoryView>> getCategory(@PathVariable Long id) {
+	private ResponseEntity<Optional<CategoryDetailView>> getCategory(@PathVariable Long id) {
 		Optional<CategoryDTO> category = service.findById(id);
 		if (category.isPresent()) {
-			return new ResponseEntity<>(Optional.ofNullable(service.mapToView(category.get())), HttpStatus.OK);
+			return new ResponseEntity<>(Optional.ofNullable(service.mapToDetail(category.get())), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}

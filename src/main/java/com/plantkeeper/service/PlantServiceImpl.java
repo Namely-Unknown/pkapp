@@ -12,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.plantkeeper.business.PlantDetailView;
 import com.plantkeeper.business.PlantView;
+import com.plantkeeper.data.DataSetter;
 import com.plantkeeper.dto.PlantDTO;
 import com.plantkeeper.entity.OrderItem;
 import com.plantkeeper.entity.Plant;
-import com.plantkeeper.repository.OrderItemRepository;
 import com.plantkeeper.repository.PlantRepository;
 
 @Service
@@ -28,8 +28,6 @@ public class PlantServiceImpl implements PlantService {
 	private CategoryService categoryService;
 	@Autowired
 	private CustomerOrderService orderService;
-	@Autowired
-	private OrderItemRepository oiRepo;
 
 	public Plant mapToEntity(PlantDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -45,7 +43,6 @@ public class PlantServiceImpl implements PlantService {
 
 	@Override
 	public PlantView mapToView(PlantDTO dto) {
-		Optional<Plant> plantEntity = repository.findById(dto.getId());
 		ModelMapper modelMapper = new ModelMapper();
 		PlantView plant = modelMapper.map(dto, PlantView.class);
 		plant.setCategory(categoryService.mapToView(categoryService.findById(dto.getCategoryId()).get()));
@@ -61,13 +58,14 @@ public class PlantServiceImpl implements PlantService {
 		plant.setProductCount(plantEntity.get().getProducts().stream().filter(c -> !c.isDiscontinued()).count());
 		
 		// Get a list of items sold for this plant
-		List<OrderItem> itemList = oiRepo.findAllByPlantId(plant.getId(), plantEntity.get().getCategory().getCompany().getId()); 
+		List<OrderItem> itemList = repository.findOrderItemsByPlantId(plant.getId(), plantEntity.get().getCategory().getCompany().getId()); 
 		
 		// Send them to the plantview
-		plant.setDataList(itemList);
+		plant.setData(DataSetter.setDataList(itemList));
 		
 		// Extract the last purchase
-		plant.setLastOrder(orderService.mapToView(orderService.findById(itemList.get(itemList.size()-1).getOrder().getId()).get()));
+		plant.setLastOrder(orderService.mapToView(orderService.findById(
+				itemList.get(itemList.size()-1).getOrder().getId()).get()));
 		
 		return plant;
 	}

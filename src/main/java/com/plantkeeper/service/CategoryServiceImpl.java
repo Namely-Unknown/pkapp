@@ -9,9 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.plantkeeper.business.CategoryDetailView;
 import com.plantkeeper.business.CategoryView;
+import com.plantkeeper.data.DataSetter;
 import com.plantkeeper.dto.CategoryDTO;
 import com.plantkeeper.entity.Category;
+import com.plantkeeper.entity.OrderItem;
 import com.plantkeeper.repository.CategoryRepository;
 import com.plantkeeper.repository.CompanyRepository;
 
@@ -24,6 +27,9 @@ public class CategoryServiceImpl implements CategoryService {
 	
 	@Autowired
 	private CompanyRepository companyRepo;
+	
+	@Autowired
+	private CustomerOrderService orderService;
 	
 
 	private CategoryDTO mapToDTO(Category category) {
@@ -38,6 +44,24 @@ public class CategoryServiceImpl implements CategoryService {
 		category.setCompany(companyRepo.findById(dto.getCompanyId()).get());
 		// TODO: Add in any connections required with the company via company service
 		return category;
+	}
+	
+	@Override
+	public CategoryDetailView mapToDetail(CategoryDTO dto) {
+		Category entity = repository.findById(dto.getId()).get();
+		ModelMapper modelMapper = new ModelMapper();
+		CategoryDetailView detail = modelMapper.map(dto, CategoryDetailView.class);
+		detail.setPlantCount(entity.getPlants().size());
+		
+		List<OrderItem> itemList = repository.findOrderItemsByCategoryId(dto.getId(), entity.getCompany().getId());
+		
+		detail.setLastOrder(
+				orderService.mapToView(orderService.findById(
+						itemList.get(itemList.size()-1).getOrder().getId()).get()));
+		
+		detail.setData(DataSetter.setDataList(itemList));
+		
+		return detail;
 	}
 	
 	@Override
@@ -76,5 +100,7 @@ public class CategoryServiceImpl implements CategoryService {
 		repository.deleteById(dto.getId());
 		return (oldCount - repository.count() == 1);
 	}
+
+	
 
 }
