@@ -60,7 +60,8 @@ public class ProductController {
 	private ResponseEntity<ProductView> editProduct(@RequestBody ProductDTO dto){
 		return service.findById(dto.getId()).map(product -> {
 			product.setPrice(dto.getPrice());
-			
+			product.setUnitsInStock(dto.getUnitsInStock());
+			product.setDiscontinued(dto.isDiscontinued());
 			return new ResponseEntity<>(service.mapToView(service.save(product)), HttpStatus.OK);
 		}).orElseGet(()-> {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
