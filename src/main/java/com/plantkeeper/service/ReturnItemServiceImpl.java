@@ -21,6 +21,9 @@ public class ReturnItemServiceImpl implements ReturnItemService {
 	@Autowired
 	private ReturnItemRepository repository;
 	
+	@Autowired
+	private OrderItemService oiService;
+	
 	public ReturnItem mapToEntity(ReturnItemDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
 		ReturnItem item = modelMapper.map(dto, ReturnItem.class);
@@ -30,6 +33,7 @@ public class ReturnItemServiceImpl implements ReturnItemService {
 	public ReturnItemDTO mapToDTO(ReturnItem item) {
 		ModelMapper modelMapper = new ModelMapper();
 		ReturnItemDTO dto = modelMapper.map(item, ReturnItemDTO.class);
+		dto.setOrderItemId(item.getItem().getId());
 		return dto;
 	}
 
@@ -64,7 +68,7 @@ public class ReturnItemServiceImpl implements ReturnItemService {
 	public ReturnItemView mapToView(ReturnItemDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
 		ReturnItemView returnItem = modelMapper.map(dto, ReturnItemView.class);
-		//TODO: Add any return fields needed
+		returnItem.setOrderItem(oiService.mapToView(oiService.findById(dto.getOrderItemId()).get()));
 		return returnItem;
 	}
 

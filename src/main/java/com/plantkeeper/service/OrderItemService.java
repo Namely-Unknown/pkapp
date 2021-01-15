@@ -17,4 +17,5 @@ public interface OrderItemService {
 	int invoiceCount(Long orderId);
 	BigDecimal getOrderSubtotal(Long orderId);
 	List<OrderItemDTO> findByPlantId(Long plantId);
+	void removeUnits(Long id, int units);
 }

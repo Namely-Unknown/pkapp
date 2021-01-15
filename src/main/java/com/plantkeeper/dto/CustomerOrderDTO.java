@@ -16,6 +16,7 @@ public class CustomerOrderDTO {
 	private LocalDate paidDate;
 	private BigDecimal received;
 	private BigDecimal shipping;
+	private String note;
 	
 	
 	public Long getId() {
@@ -71,6 +72,12 @@ public class CustomerOrderDTO {
 	}
 	public void setShipping(BigDecimal shipping) {
 		this.shipping = shipping;
+	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
 	}
 	
 }

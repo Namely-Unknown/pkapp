@@ -8,8 +8,7 @@ public class ReturnItemDTO {
 	private Long orderItemId;
 	private LocalDate created;
 	private int units;
-	
-	
+	private boolean fundsToAccount;	
 	
 	public Long getId() {
 		return id;
@@ -34,6 +33,12 @@ public class ReturnItemDTO {
 	}
 	public void setUnits(int units) {
 		this.units = units;
+	}
+	public boolean isFundsToAccount() {
+		return fundsToAccount;
+	}
+	public void setFundsToAccount(boolean fundsToAccount) {
+		this.fundsToAccount = fundsToAccount;
 	}
 	
 }

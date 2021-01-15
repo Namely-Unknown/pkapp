@@ -5,22 +5,16 @@ import java.time.LocalDate;
 public class ReturnItemView {
 
 	private Long id;
-	private Long orderItemId;
 	private LocalDate created;
+	private OrderItemView orderItem;
 	private int units;
-	
+	private boolean fundsToAccount;
 	
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public Long getOrderItemId() {
-		return orderItemId;
-	}
-	public void setOrderItemId(Long orderItemId) {
-		this.orderItemId = orderItemId;
 	}
 	public LocalDate getCreated() {
 		return created;
@@ -33,5 +27,17 @@ public class ReturnItemView {
 	}
 	public void setUnits(int units) {
 		this.units = units;
+	}
+	public OrderItemView getOrderItem() {
+		return orderItem;
+	}
+	public void setOrderItem(OrderItemView orderItem) {
+		this.orderItem = orderItem;
+	}
+	public boolean isFundsToAccount() {
+		return fundsToAccount;
+	}
+	public void setFundsToAccount(boolean fundsToAccount) {
+		this.fundsToAccount = fundsToAccount;
 	}
 }

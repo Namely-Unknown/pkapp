@@ -101,4 +101,11 @@ public class OrderItemServiceImpl implements OrderItemService {
 		return null;
 	}
 
+	@Override
+	public void removeUnits(Long id, int units) {
+		OrderItem item = repository.findById(id).get();
+		item.setUnits(item.getUnits() - units);
+		repository.save(item);
+	}
+
 }

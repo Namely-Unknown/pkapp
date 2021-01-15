@@ -20,6 +20,7 @@ public class CustomerOrder {
 	private LocalDate paidDate;
 	private BigDecimal received;
 	private BigDecimal shipping;
+	private String note;
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
@@ -41,87 +42,68 @@ public class CustomerOrder {
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public LocalDate getCreated() {
 		return created;
 	}
-
 	public void setCreated(LocalDate created) {
 		this.created = created;
 	}
-
 	public BigDecimal getReceived() {
 		return received;
 	}
-
 	public void setReceived(BigDecimal received) {
 		this.received = received;
 	}
-
 	public Company getCustomer() {
 		return customer;
 	}
-
 	public void setCustomer(Company customer) {
 		this.customer = customer;
 	}
-
 	public Person getPerson() {
 		return person;
 	}
-
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-
 	public List<OrderItem> getItems() {
 		return items;
 	}
-
 	public void setItems(List<OrderItem> items) {
 		this.items = items;
 	}
-
-
 	public String getPoNumber() {
 		return poNumber;
 	}
-
-
 	public void setPoNumber(String poNumber) {
 		this.poNumber = poNumber;
 	}
-
-
 	public OrderStatus getStatus() {
 		return status;
 	}
-
-
 	public void setStatus(OrderStatus status) {
 		this.status = status;
 	}
-
 	public LocalDate getPaidDate() {
 		return paidDate;
 	}
-
-
 	public void setPaidDate(LocalDate paidDate) {
 		this.paidDate = paidDate;
 	}
-
 	public BigDecimal getShipping() {
 		return shipping;
 	}
-
-
 	public void setShipping(BigDecimal shipping) {
 		this.shipping = shipping;
+	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
 	}
 	
 }

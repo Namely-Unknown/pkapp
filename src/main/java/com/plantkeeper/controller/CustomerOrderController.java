@@ -1,5 +1,6 @@
 package com.plantkeeper.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -54,6 +55,21 @@ public class CustomerOrderController {
 		List<CustomerOrderView> orders = service.findByCompanyId(companyId).stream()
 				.map(order -> service.mapToView(order)).collect(Collectors.toList());
 		return new ResponseEntity<>(orders, HttpStatus.OK);
+	}
+	
+	@PostMapping("/api/payorder")
+	private ResponseEntity<CustomerOrderView> payOrder(@RequestBody CustomerOrderDTO dto){
+		Optional<CustomerOrderDTO> order = service.findById(dto.getId());
+		
+		if (order.isPresent()) {
+			order.get().setReceived(dto.getReceived());
+			order.get().setPaidDate(LocalDate.now());
+			order.get().setNote(dto.getNote());
+			order.get().setStatus(OrderStatus.PAID);
+			return new ResponseEntity<>(service.mapToView(service.save(order.get())), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@PutMapping("/api/customerorder")

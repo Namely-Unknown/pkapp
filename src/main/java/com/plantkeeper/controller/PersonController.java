@@ -100,6 +100,22 @@ public class PersonController {
 		return new ResponseEntity<>(service.mapToView(service.save(dto)), HttpStatus.CREATED);
 	}
 	
+	@PostMapping("/api/toggleadmin")
+	private ResponseEntity<PersonView> toggleAdmin(@RequestBody PersonDTO dto){
+		
+		Optional<CompanyDTO> company = companyService.findById(dto.getCompanyId());
+		if (company.isEmpty()) { return new ResponseEntity<>(null, HttpStatus.FAILED_DEPENDENCY); }
+		
+		return service.findById(dto.getId()).map(person -> {
+			
+			person.setAdmin(!person.isAdmin());
+			
+			return new ResponseEntity<>(service.mapToView(service.save(person)), HttpStatus.OK);
+		}).orElseGet(()->{
+			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+		});
+	}
+	
 	@GetMapping("/api/person/{id}")
 	private ResponseEntity<PersonView> getPerson(@PathVariable Long id) {
 		Optional<PersonDTO> person = service.findById(id);
@@ -119,8 +135,6 @@ public class PersonController {
 	
 	@PutMapping("/api/person")
 	private ResponseEntity<PersonView> editPerson(@RequestBody PersonDTO dto){
-		
-		System.out.println("Putting");
 		
 		Optional<CompanyDTO> company = companyService.findById(dto.getCompanyId());
 		if (company.isEmpty()) { return new ResponseEntity<>(null, HttpStatus.FAILED_DEPENDENCY); }

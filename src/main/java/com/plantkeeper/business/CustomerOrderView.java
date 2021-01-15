@@ -20,6 +20,7 @@ public class CustomerOrderView {
 	private BigDecimal shipping;
 	private BigDecimal subTotal;
 	private BigDecimal returnedAmount;
+	private String note;
 	
 	
 	public Long getId() {
@@ -99,6 +100,12 @@ public class CustomerOrderView {
 	}
 	public void setItemCount(int itemCount) {
 		this.itemCount = itemCount;
+	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
 	}
 	
 }
