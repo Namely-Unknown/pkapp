@@ -1,19 +1,21 @@
 package com.plantkeeper.business;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.plantkeeper.data.TimeData;
 import com.plantkeeper.dto.AddressDTO;
 
-public class CompanyView {
+public class CustomerDetailView {
 
-	public Long id;
-	public String name;
-	private List<PersonView> people;
+	private Long id;
+	private String name;
+	private BigDecimal shipping;
 	private List<AddressDTO> addresses;
+	private List<PersonView> people;
+	private ArrayList<TimeData> data;
 	
-	public CompanyView() {}
-
 	public Long getId() {
 		return id;
 	}
@@ -26,6 +28,12 @@ public class CompanyView {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public BigDecimal getShipping() {
+		return shipping;
+	}
+	public void setShipping(BigDecimal shipping) {
+		this.shipping = shipping;
+	}
 	public List<AddressDTO> getAddresses() {
 		return addresses;
 	}
@@ -37,5 +45,11 @@ public class CompanyView {
 	}
 	public void setPeople(List<PersonView> people) {
 		this.people = people;
+	}
+	public ArrayList<TimeData> getData() {
+		return data;
+	}
+	public void setData(ArrayList<TimeData> data) {
+		this.data = data;
 	}
 }

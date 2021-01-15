@@ -10,9 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.plantkeeper.business.CompanyView;
+import com.plantkeeper.business.CustomerDetailView;
 import com.plantkeeper.business.CustomerView;
+import com.plantkeeper.data.DataSetter;
 import com.plantkeeper.dto.CompanyDTO;
 import com.plantkeeper.entity.Company;
+import com.plantkeeper.entity.OrderItem;
 import com.plantkeeper.repository.CompanyRepository;
 import com.plantkeeper.sorting.AddressMainSorting;
 
@@ -98,6 +101,26 @@ public class CompanyServiceImpl implements CompanyService {
 		company.setPeople(personService.findByCompanyId(dto.getId()).stream()
 				.map(person -> personService.mapToView(person)).collect(Collectors.toList()));
 		return company;
+	}
+
+	@Override
+	public CustomerDetailView mapToDetail(CompanyDTO dto) {
+		ModelMapper modelMapper = new ModelMapper();
+		CustomerDetailView detail = modelMapper.map(dto, CustomerDetailView.class);
+		detail.setAddresses(addressService.findByCompanyId(dto.getId()));
+		detail.setPeople(personService.findByCompanyId(dto.getId()).stream()
+				.map(person -> personService.mapToView(person)).collect(Collectors.toList()));
+		
+		List<OrderItem> itemList = repository.findOrderItemsByClientId(dto.getId());
+		
+		if (itemList.size() == 0) {
+			detail.setData(null);
+		} else {
+			detail.setData(DataSetter.setDataList(itemList));
+		}
+		
+		return detail;
+		
 	}
 
 }

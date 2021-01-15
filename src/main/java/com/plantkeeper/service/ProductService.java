@@ -14,4 +14,5 @@ public interface ProductService {
 	ProductView mapToView(ProductDTO dto);
 	Boolean delete(ProductDTO dto);
 	int setNextSku(ProductDTO dto);
+	void removeUnits(Long id, int units);
 }

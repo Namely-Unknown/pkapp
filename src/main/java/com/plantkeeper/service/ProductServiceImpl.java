@@ -85,6 +85,13 @@ public class ProductServiceImpl implements ProductService {
 		}
 	}
 
+	@Override
+	public void removeUnits(Long id, int units) {
+		Product product = repository.findById(id).get();
+		product.setUnitsInStock(product.getUnitsInStock() - units);
+		repository.save(product);
+	}
+
 	
 	
 	
