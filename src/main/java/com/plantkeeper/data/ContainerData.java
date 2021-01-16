@@ -9,6 +9,15 @@ public class ContainerData {
 	private BigDecimal sales;
 	private int units;
 	
+	public ContainerData() {}
+	
+	public ContainerData(Long id, String name, int units, BigDecimal sales) {
+		this.id = id;
+		this.name = name;
+		this.units = units;
+		this.sales = sales;
+	}
+	
 	public Long getId() {
 		return id;
 	}

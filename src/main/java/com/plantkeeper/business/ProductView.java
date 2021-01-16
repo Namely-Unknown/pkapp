@@ -10,9 +10,7 @@ public class ProductView {
 	private int skuInt;
 	private int unitsInStock;
 	private PlantView plant;
-	private ContainerView container;
-	
-	
+	private ContainerView container;	
 	
 	public Long getId() {
 		return id;

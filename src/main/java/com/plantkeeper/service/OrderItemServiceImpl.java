@@ -108,4 +108,14 @@ public class OrderItemServiceImpl implements OrderItemService {
 		repository.save(item);
 	}
 
+	@Override
+	public OrderItemView mapToView(OrderItem item) {
+		ModelMapper mapper = new ModelMapper();
+		OrderItemView view = mapper.map(item, OrderItemView.class);
+		System.out.println("made view");
+		view.setProduct(productService.mapToView(item.getProduct()));
+		System.out.println("set Product");
+		return view;
+	}
+
 }

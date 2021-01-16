@@ -4,20 +4,17 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-
-public class PlantData {
+public class ClientPlantData {
 
 	private Long id;
 	private String name;
-	private BigDecimal sales;
-	private int units;
 	private LocalDate lastPurchase;
 	private Long lastPurchaseId;
+	private BigDecimal sales;
+	private int units;
 	private ArrayList<ContainerData> containerData;
-	
-	public PlantData() {}
-	
-	public PlantData(Long id, String name, LocalDate lastPurchase, Long lastPurchaseId, int units, BigDecimal sales) {
+
+	public ClientPlantData(Long id, String name, LocalDate lastPurchase, Long lastPurchaseId, int units, BigDecimal sales) {
 		this.id = id;
 		this.name = name;
 		this.lastPurchase = lastPurchase;
@@ -27,17 +24,11 @@ public class PlantData {
 		this.containerData = new ArrayList<ContainerData>();
 	}
 	
-	public Long getId() {
-		return id;
+	public LocalDate getLastPurchase() {
+		return lastPurchase;
 	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
+	public void setLastPurchase(LocalDate lastPurchase) {
+		this.lastPurchase = lastPurchase;
 	}
 	public BigDecimal getSales() {
 		return sales;
@@ -45,17 +36,23 @@ public class PlantData {
 	public void setSales(BigDecimal sales) {
 		this.sales = sales;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public int getUnits() {
 		return units;
-	}
+	}	
 	public void setUnits(int units) {
 		this.units = units;
 	}
-	public LocalDate getLastPurchase() {
-		return lastPurchase;
+	public Long getId() {
+		return id;
 	}
-	public void setLastPurchase(LocalDate lastPurchase) {
-		this.lastPurchase = lastPurchase;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public Long getLastPurchaseId() {
 		return lastPurchaseId;
@@ -65,8 +62,5 @@ public class PlantData {
 	}
 	public ArrayList<ContainerData> getContainerData() {
 		return containerData;
-	}
-	public void setContainerData(ArrayList<ContainerData> containerData) {
-		this.containerData = containerData;
 	}
 }

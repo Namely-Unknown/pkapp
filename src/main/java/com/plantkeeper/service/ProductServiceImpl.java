@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.plantkeeper.business.ProductDetailView;
 import com.plantkeeper.business.ProductView;
+import com.plantkeeper.data.DataSetter;
 import com.plantkeeper.dto.ProductDTO;
+import com.plantkeeper.entity.OrderItem;
 import com.plantkeeper.entity.Product;
 import com.plantkeeper.repository.ProductRepository;
 
@@ -24,6 +27,8 @@ public class ProductServiceImpl implements ProductService {
 	private ContainerService containerService;
 	@Autowired
 	private PlantService plantService;
+	@Autowired
+	private CustomerOrderService orderService;
 	
 	public Product mapToEntity(ProductDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -44,6 +49,28 @@ public class ProductServiceImpl implements ProductService {
 		product.setPlant(plantService.mapToView(plantService.findById(dto.getPlantId()).get()));
 		product.setContainer(containerService.mapToView(containerService.findById(dto.getContainerId()).get()));
 		return product;
+	}
+	
+	@Override
+	public ProductDetailView mapToDetail(ProductDTO dto) {
+		Product entity = repository.findById(dto.getId()).get();
+		ModelMapper modelMapper = new ModelMapper();
+		ProductDetailView detail = modelMapper.map(dto, ProductDetailView.class);
+		detail.setPlant(plantService.mapToView(plantService.findById(dto.getPlantId()).get()));
+		detail.setContainer(containerService.mapToView(containerService.findById(dto.getContainerId()).get()));
+		
+		List<OrderItem> itemList = repository
+				.findOrderItemsByProductId(dto.getId(), entity.getContainer().getCompany().getId());
+		
+		if (itemList.size() == 0) {
+			detail.setData(null);
+		} else {
+			detail.setData(DataSetter.setDataList(itemList));
+			detail.setLastOrder(orderService
+					.mapToView(orderService.findById(itemList.get(itemList.size() - 1).getOrder().getId()).get()));
+		}
+		
+		return detail;
 	}
 
 	@Override
@@ -90,6 +117,18 @@ public class ProductServiceImpl implements ProductService {
 		Product product = repository.findById(id).get();
 		product.setUnitsInStock(product.getUnitsInStock() - units);
 		repository.save(product);
+	}
+
+	/**
+	 * Only use when coming from a plant list.  Will not return plantview
+	 */
+	@Override
+	public ProductView mapToView(Product product) {
+		//TODO: map and set container then return
+		ModelMapper modelMapper = new ModelMapper();
+		ProductView returnProduct = modelMapper.map(product, ProductView.class);
+		returnProduct.setContainer(containerService.mapToView(product.getContainer()));
+		return returnProduct;
 	}
 
 	

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.plantkeeper.business.ProductDetailView;
 import com.plantkeeper.business.ProductView;
 import com.plantkeeper.dto.ProductDTO;
 import com.plantkeeper.service.ProductService;
@@ -38,12 +39,12 @@ public class ProductController {
 	}
 	
 	@GetMapping("/api/product/{id}")
-	private ResponseEntity<ProductView> getProduct(@PathVariable Long id) {
+	private ResponseEntity<ProductDetailView> getProduct(@PathVariable Long id) {
 		System.out.println(id);
 		Optional<ProductDTO> product = service.findById(id);
 		if (product.isPresent()) {
 			System.out.println(product.get().getPrice());
-			return new ResponseEntity<>(service.mapToView(product.get()), HttpStatus.OK);
+			return new ResponseEntity<>(service.mapToDetail(product.get()), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}

@@ -103,4 +103,10 @@ public class ContainerServiceImpl implements ContainerService {
 		return (oldCount - repository.count() == 1);
 	}
 
+	@Override
+	public ContainerView mapToView(Container container) {
+		ModelMapper mapper = new ModelMapper();
+		return mapper.map(container, ContainerView.class);
+	}
+
 }

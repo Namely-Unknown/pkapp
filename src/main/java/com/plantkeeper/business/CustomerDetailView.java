@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.plantkeeper.data.TimeData;
+import com.plantkeeper.data.ClientTimeData;
 import com.plantkeeper.dto.AddressDTO;
 
 public class CustomerDetailView {
@@ -14,7 +14,8 @@ public class CustomerDetailView {
 	private BigDecimal shipping;
 	private List<AddressDTO> addresses;
 	private List<PersonView> people;
-	private ArrayList<TimeData> data;
+	private int orderCount;
+	private ArrayList<ClientTimeData> data;
 	
 	public Long getId() {
 		return id;
@@ -46,10 +47,16 @@ public class CustomerDetailView {
 	public void setPeople(List<PersonView> people) {
 		this.people = people;
 	}
-	public ArrayList<TimeData> getData() {
+	public ArrayList<ClientTimeData> getData() {
 		return data;
 	}
-	public void setData(ArrayList<TimeData> data) {
+	public void setData(ArrayList<ClientTimeData> data) {
 		this.data = data;
+	}
+	public int getOrderCount() {
+		return orderCount;
+	}
+	public void setOrderCount(int orderCount) {
+		this.orderCount = orderCount;
 	}
 }

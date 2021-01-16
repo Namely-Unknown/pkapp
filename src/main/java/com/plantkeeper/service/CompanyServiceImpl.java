@@ -1,6 +1,9 @@
 package com.plantkeeper.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -12,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.plantkeeper.business.CompanyView;
 import com.plantkeeper.business.CustomerDetailView;
 import com.plantkeeper.business.CustomerView;
+import com.plantkeeper.business.OrderItemView;
 import com.plantkeeper.data.DataSetter;
 import com.plantkeeper.dto.CompanyDTO;
 import com.plantkeeper.entity.Company;
@@ -31,6 +35,9 @@ public class CompanyServiceImpl implements CompanyService {
 	
 	@Autowired
 	private PersonService personService;
+	
+	@Autowired
+	private OrderItemService oiService;
 
 	public Company mapToEntity(CompanyDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -116,7 +123,7 @@ public class CompanyServiceImpl implements CompanyService {
 		if (itemList.size() == 0) {
 			detail.setData(null);
 		} else {
-			detail.setData(DataSetter.setDataList(itemList));
+			detail.setData(DataSetter.setCustomerDataList(itemList));
 		}
 		
 		return detail;

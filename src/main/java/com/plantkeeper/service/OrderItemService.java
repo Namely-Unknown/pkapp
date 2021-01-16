@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.plantkeeper.business.OrderItemView;
 import com.plantkeeper.dto.OrderItemDTO;
+import com.plantkeeper.entity.OrderItem;
 
 public interface OrderItemService {
 
@@ -13,6 +14,7 @@ public interface OrderItemService {
 	Optional<OrderItemDTO> findById(Long id);
 	List<OrderItemDTO> findByOrderId(Long id);
 	OrderItemView mapToView(OrderItemDTO dto);
+	OrderItemView mapToView(OrderItem item);
 	Boolean delete(OrderItemDTO dto);
 	int invoiceCount(Long orderId);
 	BigDecimal getOrderSubtotal(Long orderId);
