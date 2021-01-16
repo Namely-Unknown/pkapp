@@ -10,7 +10,6 @@ public class CategoryData {
 	private int units;
 	private BigDecimal sales;
 	
-	
 	public Long getId() {
 		return id;
 	}

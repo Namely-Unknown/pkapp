@@ -2,11 +2,12 @@ package com.plantkeeper.data;
 
 import java.math.BigDecimal;
 
-public class PlantData {
+public class ProductData {
 
 	private String name;
 	private BigDecimal sales;
 	private int units;
+	
 	public String getName() {
 		return name;
 	}
