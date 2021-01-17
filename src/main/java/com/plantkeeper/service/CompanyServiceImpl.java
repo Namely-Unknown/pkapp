@@ -19,6 +19,7 @@ import com.plantkeeper.entity.Company;
 import com.plantkeeper.entity.CustomerOrder;
 import com.plantkeeper.entity.OrderItem;
 import com.plantkeeper.repository.CompanyRepository;
+import com.plantkeeper.repository.CustomerOrderRepository;
 import com.plantkeeper.sorting.AddressMainSorting;
 
 @Service
@@ -34,9 +35,13 @@ public class CompanyServiceImpl implements CompanyService {
 	@Autowired
 	private PersonService personService;
 	
+	@Autowired
+	private CustomerOrderRepository coRepo;
+	
 	public Company mapToEntity(CompanyDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
 		Company company = modelMapper.map(dto, Company.class);
+		company.setOrders(coRepo.findAllByCustomerId(company.getId()));
 		return company;
 	}
 
@@ -131,11 +136,19 @@ public class CompanyServiceImpl implements CompanyService {
 		CompanyDetailView detail = mapper.map(dto, CompanyDetailView.class);
 		
 		List<CustomerOrder> orderList = repository.findOrdersByCompanyId(dto.getId());
+		List<Company> customerList = repository.findByCustomerOf(dto.getId());
 		
+		detail.setAddresses(addressService.findByCompanyId(dto.getId()));
 		detail.setYTDRev(orderList);
 		detail.setTrailingTwelveData(orderList);
+		detail.setDashboardData(DataSetter.setCompanyDashboardData(customerList, orderList));
 		
 		return detail;
+	}
+
+	@Override
+	public CompanyDTO findByOrderItemId(Long id) {
+		return mapToDTO(repository.findByOrderItemId(id).get());
 	}
 
 }

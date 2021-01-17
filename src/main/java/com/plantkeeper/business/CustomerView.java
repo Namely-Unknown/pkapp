@@ -12,6 +12,7 @@ public class CustomerView {
 	private BigDecimal shipping;
 	private List<AddressDTO> addresses;
 	private List<PersonView> people;
+	private BigDecimal fundsOnAccount;
 	
 	
 	public Long getId() {
@@ -43,5 +44,11 @@ public class CustomerView {
 	}
 	public void setPeople(List<PersonView> people) {
 		this.people = people;
+	}
+	public BigDecimal getFundsOnAccount() {
+		return fundsOnAccount;
+	}
+	public void setFundsOnAccount(BigDecimal fundsOnAccount) {
+		this.fundsOnAccount = fundsOnAccount;
 	}
 }

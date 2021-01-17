@@ -1,5 +1,6 @@
 package com.plantkeeper.controller;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -17,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.plantkeeper.business.ReturnItemView;
+import com.plantkeeper.dto.CompanyDTO;
 import com.plantkeeper.dto.OrderItemDTO;
 import com.plantkeeper.dto.ReturnItemDTO;
+import com.plantkeeper.entity.Company;
 import com.plantkeeper.entity.OrderItem;
+import com.plantkeeper.service.CompanyService;
 import com.plantkeeper.service.OrderItemService;
 import com.plantkeeper.service.ReturnItemService;
 
@@ -31,6 +35,9 @@ public class ReturnItemController {
 
 	@Autowired
 	private OrderItemService oiService;
+	
+	@Autowired
+	private CompanyService companyService;
 
 	@PostMapping("/api/returnitem")
 	private ResponseEntity<ReturnItemView> addReturnItem(@RequestBody ReturnItemDTO dto) {
@@ -45,6 +52,10 @@ public class ReturnItemController {
 			if (!savedReturn.isFundsToAccount()) {
 				System.out.println("remove from invoice");
 				oiService.removeUnits(item.get().getId(), savedReturn.getUnits());
+			} else {
+				CompanyDTO client = companyService.findByOrderItemId(dto.getOrderItemId());
+				client.setFundsOnAccount(client.getFundsOnAccount().subtract(item.get().getUnitPrice().multiply(BigDecimal.valueOf(dto.getUnits()))));
+				companyService.save(client);
 			}
 			return new ResponseEntity<>(service.mapToView(savedReturn), HttpStatus.OK);
 		} else {

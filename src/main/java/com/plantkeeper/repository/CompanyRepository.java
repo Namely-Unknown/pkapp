@@ -13,18 +13,19 @@ import com.plantkeeper.entity.OrderItem;
 public interface CompanyRepository extends JpaRepository<Company, Long> {
 
 	Optional<Company> findByEnrollmentKey(String key);
+
 	List<Company> findByCustomerOf(Long companyId);
-	
-	@Query("SELECT oi " + 
-			"FROM Company co JOIN CustomerOrder o ON o.customer = co.id " +
-			"JOIN OrderItem oi ON oi.order = o.id " +
-			"WHERE co.id = ?1 " +
-			"ORDER BY o.created ASC")
+
+	@Query("SELECT oi " + "FROM Company co JOIN CustomerOrder o ON o.customer = co.id "
+			+ "JOIN OrderItem oi ON oi.order = o.id " + "WHERE co.id = ?1 " + "ORDER BY o.created ASC")
 	List<OrderItem> findOrderItemsByClientId(Long clientId);
-	
-	@Query("SELECT c FROM CustomerOrder c " + 
-			"JOIN Company co ON c.customer = co.id " + 
-			"WHERE co.customerOf = ?1 " +
-			"ORDER BY c.created ASC")
+
+	@Query("SELECT c FROM CustomerOrder c " + "JOIN Company co ON c.customer = co.id " + "WHERE co.customerOf = ?1 "
+			+ "ORDER BY c.created ASC")
 	List<CustomerOrder> findOrdersByCompanyId(Long companyId);
+
+	@Query("SELECT c FROM Company c JOIN CustomerOrder o ON o.customer = c.id " + 
+			"JOIN OrderItem oi ON oi.order = o.id "
+			+ "WHERE oi.id = ?1")
+	Optional<Company> findByOrderItemId(Long id);
 }

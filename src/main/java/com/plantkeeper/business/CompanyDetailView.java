@@ -7,6 +7,8 @@ import java.util.List;
 
 import com.plantkeeper.data.CompanyDashboardData;
 import com.plantkeeper.data.MonthlyDetail;
+import com.plantkeeper.dto.AddressDTO;
+import com.plantkeeper.entity.Address;
 import com.plantkeeper.entity.CustomerOrder;
 import com.plantkeeper.sorting.CustomerOrderDateSortDesc;
 import com.plantkeeper.sorting.TrailingTwelveData;
@@ -17,6 +19,7 @@ public class CompanyDetailView {
 	public String name;
 	private BigDecimal ytdRev;
 	private BigDecimal ytdRevPrior;
+	private List<AddressDTO> addresses;
 	private ArrayList<CompanyDashboardData> dashboardData;
 	private ArrayList<MonthlyDetail> currentTrailingTwelveData;
 	private ArrayList<MonthlyDetail> priorTrailingTwelveData;
@@ -63,56 +66,49 @@ public class CompanyDetailView {
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public ArrayList<CompanyDashboardData> getDashboardData() {
 		return dashboardData;
 	}
-
 	public void setDashboardData(ArrayList<CompanyDashboardData> dashboardData) {
 		this.dashboardData = dashboardData;
 	}
-
 	public ArrayList<MonthlyDetail> getCurrentTrailingTwelveData() {
 		return currentTrailingTwelveData;
 	}
-
 	public void setCurrentTrailingTwelveData(ArrayList<MonthlyDetail> currentTrailingTwelveData) {
 		this.currentTrailingTwelveData = currentTrailingTwelveData;
 	}
-
 	public ArrayList<MonthlyDetail> getPriorTrailingTwelveData() {
 		return priorTrailingTwelveData;
 	}
-
 	public void setPriorTrailingTwelveData(ArrayList<MonthlyDetail> priorTrailingTwelveData) {
 		this.priorTrailingTwelveData = priorTrailingTwelveData;
 	}
-
 	public BigDecimal getYtdRev() {
 		return ytdRev;
 	}
-
 	public void setYtdRev(BigDecimal ytdRev) {
 		this.ytdRev = ytdRev;
 	}
-
 	public BigDecimal getYtdRevPrior() {
 		return ytdRevPrior;
 	}
-
 	public void setYtdRevPrior(BigDecimal ytdRevPrior) {
 		this.ytdRevPrior = ytdRevPrior;
+	}
+	public List<AddressDTO> getAddresses() {
+		return addresses;
+	}
+	public void setAddresses(List<AddressDTO> addresses) {
+		this.addresses = addresses;
 	}
 }

@@ -15,6 +15,7 @@ public class Company {
 	private BigDecimal shipping;
 	private Long customerOf;
 	private String enrollmentKey;
+	private BigDecimal fundsOnAccount;
 	
 	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
 	private List<Address> addresses;
@@ -126,5 +127,13 @@ public class Company {
 	
 	public void setEnrollmentKey(String enrollmentKey) {
 		this.enrollmentKey = enrollmentKey;
+	}
+
+	public BigDecimal getFundsOnAccount() {
+		return fundsOnAccount;
+	}
+
+	public void setFundsOnAccount(BigDecimal fundsOnAccount) {
+		this.fundsOnAccount = fundsOnAccount;
 	}
 }

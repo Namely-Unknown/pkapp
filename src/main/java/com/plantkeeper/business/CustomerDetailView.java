@@ -16,6 +16,7 @@ public class CustomerDetailView {
 	private List<PersonView> people;
 	private int orderCount;
 	private ArrayList<ClientTimeData> data;
+	private BigDecimal fundsOnAccount;
 	
 	public Long getId() {
 		return id;
@@ -58,5 +59,11 @@ public class CustomerDetailView {
 	}
 	public void setOrderCount(int orderCount) {
 		this.orderCount = orderCount;
+	}
+	public BigDecimal getFundsOnAccount() {
+		return fundsOnAccount;
+	}
+	public void setFundsOnAccount(BigDecimal fundsOnAccount) {
+		this.fundsOnAccount = fundsOnAccount;
 	}
 }

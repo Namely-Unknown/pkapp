@@ -7,9 +7,11 @@ public class CustomerData {
 	private String name;
 	private BigDecimal spent;
 	
-	public CustomerData(String name) {
+	public CustomerData() {}
+	
+	public CustomerData(String name, BigDecimal spent) {
 		this.name = name;
-		this.spent = new BigDecimal(0.0);
+		this.spent = spent;
 	}
 	public String getName() {
 		return name;

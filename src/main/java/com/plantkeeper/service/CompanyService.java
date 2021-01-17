@@ -8,6 +8,7 @@ import com.plantkeeper.business.CompanyView;
 import com.plantkeeper.business.CustomerDetailView;
 import com.plantkeeper.business.CustomerView;
 import com.plantkeeper.dto.CompanyDTO;
+import com.plantkeeper.entity.Company;
 
 public interface CompanyService {
 
@@ -15,6 +16,8 @@ public interface CompanyService {
 	List<CompanyDTO> findByCustomerOf(Long companyId);
 	Optional<CompanyDTO> findByEnrollmentKey(String key);
 	Optional<CompanyDTO> findById(Long id);
+	Company mapToEntity(CompanyDTO dto);
+	CompanyDTO findByOrderItemId(Long id);
 	CustomerView mapToView(CompanyDTO dto);
 	CompanyDetailView mapToCompanyDetail(CompanyDTO dto);
 	CustomerDetailView mapToDetail(CompanyDTO dto);

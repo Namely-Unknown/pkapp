@@ -1,8 +1,15 @@
 package com.plantkeeper.controller;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +27,10 @@ import com.plantkeeper.business.CompanyView;
 import com.plantkeeper.business.CustomerDetailView;
 import com.plantkeeper.business.CustomerView;
 import com.plantkeeper.dto.CompanyDTO;
+import com.plantkeeper.entity.Company;
+import com.plantkeeper.entity.CustomerOrder;
+import com.plantkeeper.exception.CustomerNotFoundException;
+import com.plantkeeper.export.ClientExcelExporter;
 import com.plantkeeper.service.AddressService;
 import com.plantkeeper.service.CompanyService;
 import com.plantkeeper.utils.KeyGenerator;
@@ -42,6 +53,7 @@ public class CompanyController {
 				String key = KeyGenerator.generateKey();
 				dto.setEnrollmentKey(key);
 			}
+			dto.setFundsOnAccount(new BigDecimal("0.00"));
 			CompanyDTO company = service.save(dto);
 			return new ResponseEntity<>(company, HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -49,11 +61,21 @@ public class CompanyController {
 		}
 	}
 
-	@GetMapping("/api/company/{id}")
-	private ResponseEntity<CompanyDetailView> getCompany(@PathVariable Long id) {
+	@GetMapping("/api/companydetail/{id}")
+	private ResponseEntity<CompanyDetailView> getCompanyDetail(@PathVariable Long id) {
 		Optional<CompanyDTO> company = service.findById(id);
 		if (company.isPresent()) {
 			return new ResponseEntity<>(service.mapToCompanyDetail(company.get()), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	@GetMapping("/api/company/{id}")
+	private ResponseEntity<CompanyView> getCompany(@PathVariable Long id) {
+		Optional<CompanyDTO> company = service.findById(id);
+		if (company.isPresent()) {
+			return new ResponseEntity<>(service.mapToCompanyView(company.get()), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}
@@ -107,6 +129,27 @@ public class CompanyController {
 		} else {
 			return new ResponseEntity<>(dto, HttpStatus.CONFLICT);
 		}
+	}
+	
+	
+	@GetMapping("/api/customerData={customerId}")
+	public void customerData(HttpServletResponse response, @PathVariable Long customerId) throws IOException {
+
+		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+		String currentDateTime = dateFormatter.format(new Date());
+		
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=customerData_" + currentDateTime + ".xlsx";
+		response.setHeader(headerKey,  headerValue);
+		
+		Company customer = service.mapToEntity(service.findById(customerId).orElseThrow(()-> new CustomerNotFoundException(customerId)));
+		
+		List<CustomerOrder> orderList = customer.getOrders();
+		
+		ClientExcelExporter exporter = new ClientExcelExporter(orderList);
+		
+		exporter.export(response);
 	}
 
 }

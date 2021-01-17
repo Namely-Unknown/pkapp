@@ -21,6 +21,7 @@ public class CustomerOrderView {
 	private BigDecimal subTotal;
 	private BigDecimal returnedAmount;
 	private String note;
+	private BigDecimal foaUsed;
 	
 	
 	public Long getId() {
@@ -106,6 +107,12 @@ public class CustomerOrderView {
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	public BigDecimal getFoaUsed() {
+		return foaUsed;
+	}
+	public void setFoaUsed(BigDecimal foaUsed) {
+		this.foaUsed = foaUsed;
 	}
 	
 }

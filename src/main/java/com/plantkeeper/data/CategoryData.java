@@ -10,6 +10,14 @@ public class CategoryData {
 	private int units;
 	private BigDecimal sales;
 	
+	public CategoryData(Long id, String name, String prefix, int units, BigDecimal sales) {
+		this.id = id;
+		this.name = name;
+		this.prefix = prefix;
+		this.units = units;
+		this.sales = sales;
+	}
+	
 	public Long getId() {
 		return id;
 	}

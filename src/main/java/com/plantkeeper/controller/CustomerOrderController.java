@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.plantkeeper.business.CustomerOrderView;
+import com.plantkeeper.dto.CompanyDTO;
 import com.plantkeeper.dto.CustomerOrderDTO;
+import com.plantkeeper.service.CompanyService;
 import com.plantkeeper.service.CustomerOrderService;
 import com.plantkeeper.utils.OrderStatus;
 
@@ -26,10 +28,21 @@ public class CustomerOrderController {
 
 	@Autowired
 	private CustomerOrderService service;
+	@Autowired
+	private CompanyService companyService;
 	
 	@PostMapping("/api/customerorder")
 	private ResponseEntity<CustomerOrderView> addOrder(@RequestBody CustomerOrderDTO dto){
 		dto.setStatus(OrderStatus.FULFILLED);
+		Optional<CompanyDTO> company = companyService.findById(dto.getCustomerId());
+		if (company.isPresent()) {
+			CompanyDTO saveCompany = company.get();
+			System.out.println(saveCompany.getFundsOnAccount());
+			saveCompany.setFundsOnAccount(saveCompany.getFundsOnAccount().add(dto.getFoaUsed()));
+			System.out.println(saveCompany.getFundsOnAccount());
+			companyService.save(saveCompany);			
+		}
+		
 		return new ResponseEntity<>(service.mapToView(service.save(dto)), HttpStatus.CREATED);
 	}
 	

@@ -8,6 +8,12 @@ public class CompanyDashboardData {
 	private ArrayList<ContainerData> containerData;
 	private ArrayList<CustomerData> customerData;
 	
+	CompanyDashboardData(){
+		this.categoryData = new ArrayList<CategoryData>();
+		this.containerData = new ArrayList<ContainerData>();
+		this.customerData = new ArrayList<CustomerData>();
+	}
+	
 	public ArrayList<CategoryData> getCategoryData() {
 		return categoryData;
 	}

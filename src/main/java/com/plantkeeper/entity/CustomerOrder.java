@@ -21,6 +21,7 @@ public class CustomerOrder {
 	private BigDecimal received;
 	private BigDecimal shipping;
 	private String note;
+	private BigDecimal foaUsed;
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
@@ -112,5 +113,12 @@ public class CustomerOrder {
 		}
 		return total;
 	}
+	public BigDecimal getFoaUsed() {
+		return foaUsed;
+	}
+	public void setFoaUsed(BigDecimal foaUsed) {
+		this.foaUsed = foaUsed;
+	}
+	
 	
 }

@@ -9,6 +9,7 @@ public class CompanyDTO {
 	private BigDecimal shipping;
 	private Long customerOf;
 	private String enrollmentKey;
+	private BigDecimal fundsOnAccount;
 	
 	public String getName() {
 		return name;
@@ -39,6 +40,12 @@ public class CompanyDTO {
 	}
 	public void setEnrollmentKey(String enrollmentKey) {
 		this.enrollmentKey = enrollmentKey;
+	}
+	public BigDecimal getFundsOnAccount() {
+		return fundsOnAccount;
+	}
+	public void setFundsOnAccount(BigDecimal fundsOnAccount) {
+		this.fundsOnAccount = fundsOnAccount;
 	}
 	
 }

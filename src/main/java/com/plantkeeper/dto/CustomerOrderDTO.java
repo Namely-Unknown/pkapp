@@ -17,6 +17,7 @@ public class CustomerOrderDTO {
 	private BigDecimal received;
 	private BigDecimal shipping;
 	private String note;
+	private BigDecimal foaUsed;
 	
 	
 	public Long getId() {
@@ -79,5 +80,12 @@ public class CustomerOrderDTO {
 	public void setNote(String note) {
 		this.note = note;
 	}
+	public BigDecimal getFoaUsed() {
+		return foaUsed;
+	}
+	public void setFoaUsed(BigDecimal foaUsed) {
+		this.foaUsed = foaUsed;
+	}
+	
 	
 }
