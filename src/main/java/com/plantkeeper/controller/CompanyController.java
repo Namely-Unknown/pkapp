@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.plantkeeper.business.CompanyDetailView;
 import com.plantkeeper.business.CompanyView;
 import com.plantkeeper.business.CustomerDetailView;
 import com.plantkeeper.business.CustomerView;
@@ -49,10 +50,10 @@ public class CompanyController {
 	}
 
 	@GetMapping("/api/company/{id}")
-	private ResponseEntity<CompanyView> getCompany(@PathVariable Long id) {
+	private ResponseEntity<CompanyDetailView> getCompany(@PathVariable Long id) {
 		Optional<CompanyDTO> company = service.findById(id);
 		if (company.isPresent()) {
-			return new ResponseEntity<>(service.mapToCompanyView(company.get()), HttpStatus.OK);
+			return new ResponseEntity<>(service.mapToCompanyDetail(company.get()), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}

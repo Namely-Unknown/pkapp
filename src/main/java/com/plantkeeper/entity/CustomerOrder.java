@@ -105,5 +105,12 @@ public class CustomerOrder {
 	public void setNote(String note) {
 		this.note = note;
 	}
+	public BigDecimal getSubtotal() {
+		BigDecimal total = new BigDecimal("0.00");
+		for (OrderItem item : this.items) {
+			total = total.add(item.getUnitPrice().multiply(BigDecimal.valueOf(item.getUnits())));
+		}
+		return total;
+	}
 	
 }

@@ -2,10 +2,6 @@ package com.plantkeeper.data;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import com.plantkeeper.business.OrderItemView;
 
 public class ClientTimeData {
 	private BigDecimal sales;

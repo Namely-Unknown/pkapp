@@ -1,6 +1,6 @@
 package com.plantkeeper.business;
 
-import com.plantkeeper.dto.UserSettingsDTO;
+//import com.plantkeeper.dto.UserSettingsDTO;
 
 public class PersonView {
 
@@ -13,8 +13,6 @@ public class PersonView {
 	private String phone;
 	private boolean isAdmin;
 //	private UserSettingsDTO settings;
-	
-	
 	
 	public Long getId() {
 		return id;

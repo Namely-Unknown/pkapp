@@ -3,6 +3,7 @@ package com.plantkeeper.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.plantkeeper.business.CompanyDetailView;
 import com.plantkeeper.business.CompanyView;
 import com.plantkeeper.business.CustomerDetailView;
 import com.plantkeeper.business.CustomerView;
@@ -15,6 +16,7 @@ public interface CompanyService {
 	Optional<CompanyDTO> findByEnrollmentKey(String key);
 	Optional<CompanyDTO> findById(Long id);
 	CustomerView mapToView(CompanyDTO dto);
+	CompanyDetailView mapToCompanyDetail(CompanyDTO dto);
 	CustomerDetailView mapToDetail(CompanyDTO dto);
 	CompanyView mapToCompanyView(CompanyDTO dto);
 	Boolean delete(CompanyDTO dto);

@@ -7,15 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.plantkeeper.entity.CustomerOrder;
 import com.plantkeeper.entity.OrderItem;
 import com.plantkeeper.entity.Plant;
-import com.plantkeeper.service.OrderItemService;
-import com.plantkeeper.sorting.CustomerOrderDateSortDesc;
 import com.plantkeeper.sorting.OrderItemDateSortDesc;
-import com.plantkeeper.business.OrderItemView;
 
 public class DataSetter {
 
@@ -70,9 +65,6 @@ public class DataSetter {
 		}
 
 		LocalDate today = LocalDate.now();
-
-		OrderItemView view = null;
-		String name = null;
 
 		// Loop all items and add to data
 		for (OrderItem item : itemList) {

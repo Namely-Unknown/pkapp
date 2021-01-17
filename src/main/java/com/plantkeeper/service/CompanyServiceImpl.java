@@ -1,9 +1,6 @@
 package com.plantkeeper.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -12,13 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.plantkeeper.business.CompanyDetailView;
 import com.plantkeeper.business.CompanyView;
 import com.plantkeeper.business.CustomerDetailView;
 import com.plantkeeper.business.CustomerView;
-import com.plantkeeper.business.OrderItemView;
 import com.plantkeeper.data.DataSetter;
 import com.plantkeeper.dto.CompanyDTO;
 import com.plantkeeper.entity.Company;
+import com.plantkeeper.entity.CustomerOrder;
 import com.plantkeeper.entity.OrderItem;
 import com.plantkeeper.repository.CompanyRepository;
 import com.plantkeeper.sorting.AddressMainSorting;
@@ -36,9 +34,6 @@ public class CompanyServiceImpl implements CompanyService {
 	@Autowired
 	private PersonService personService;
 	
-	@Autowired
-	private OrderItemService oiService;
-
 	public Company mapToEntity(CompanyDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
 		Company company = modelMapper.map(dto, Company.class);
@@ -128,6 +123,19 @@ public class CompanyServiceImpl implements CompanyService {
 		
 		return detail;
 		
+	}
+
+	@Override
+	public CompanyDetailView mapToCompanyDetail(CompanyDTO dto) {
+		ModelMapper mapper = new ModelMapper();
+		CompanyDetailView detail = mapper.map(dto, CompanyDetailView.class);
+		
+		List<CustomerOrder> orderList = repository.findOrdersByCompanyId(dto.getId());
+		
+		detail.setYTDRev(orderList);
+		detail.setTrailingTwelveData(orderList);
+		
+		return detail;
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.plantkeeper.service;
 
-import java.time.LocalDate;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
