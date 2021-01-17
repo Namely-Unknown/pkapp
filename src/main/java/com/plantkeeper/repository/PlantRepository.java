@@ -28,5 +28,8 @@ public interface PlantRepository extends JpaRepository<Plant, Long> {
 			"WHERE pl.id = :plantId AND co.customerOf = :companyId " +
 			"ORDER BY c.created ASC")
 	List<OrderItem> findOrderItemsByPlantId(@Param("plantId") Long plantId, @Param("companyId") Long companyId);
+	
+	@Query("SELECT p FROM Plant p JOIN Product pr ON pr.plant = p.id WHERE pr.id =?1")
+	Plant findByProductId(Long id);
 
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.plantkeeper.business.ShipmentView;
 import com.plantkeeper.dto.ShipmentDTO;
+import com.plantkeeper.entity.Shipment;
 
 public interface ShipmentService {
 
@@ -12,6 +13,7 @@ public interface ShipmentService {
 	Optional<ShipmentDTO> findById(Long id);
 	List<ShipmentDTO> findByCompanyId(Long companyId);
 	List<ShipmentDTO> findByShipperId(Long shipperId);
+	List<Shipment> findOutstandingByCompanyId(Long id);
 	ShipmentView mapToView(ShipmentDTO dto);
 	Boolean delete(ShipmentDTO dto);
 	Boolean receiveShipment(Long id);

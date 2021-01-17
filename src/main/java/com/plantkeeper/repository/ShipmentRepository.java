@@ -19,4 +19,8 @@ public interface ShipmentRepository extends JpaRepository<Shipment, Long> {
 	
 	List<Shipment> findByShipperId(Long shipperId);
 	
+	@Query("SELECT s FROM Shipment s JOIN ShippingCo sc ON s.shipper = sc.id " + 
+	"WHERE sc.company = ?1 AND s.status = 0")
+	List<Shipment> findOutstandingByCompanyid(Long id);
+	
 }

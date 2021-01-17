@@ -14,6 +14,7 @@ public interface ProductService {
 	Optional<ProductDTO> findById(Long id);
 	List<ProductDTO> findByCompanyId(Long id);
 	ProductView mapToView(ProductDTO dto);
+	Product mapToEntity(ProductDTO dto);
 	ProductDetailView mapToDetail(ProductDTO dto);
 	ProductView mapToView(Product product);
 	Boolean delete(ProductDTO dto);

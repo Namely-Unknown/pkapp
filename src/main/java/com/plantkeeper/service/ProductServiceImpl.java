@@ -15,6 +15,8 @@ import com.plantkeeper.data.DataSetter;
 import com.plantkeeper.dto.ProductDTO;
 import com.plantkeeper.entity.OrderItem;
 import com.plantkeeper.entity.Product;
+import com.plantkeeper.repository.ContainerRepository;
+import com.plantkeeper.repository.PlantRepository;
 import com.plantkeeper.repository.ProductRepository;
 
 @Service
@@ -29,10 +31,16 @@ public class ProductServiceImpl implements ProductService {
 	private PlantService plantService;
 	@Autowired
 	private CustomerOrderService orderService;
+	@Autowired
+	private PlantRepository plantRepo;
+	@Autowired
+	private ContainerRepository containerRepo;
 	
 	public Product mapToEntity(ProductDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
 		Product product = modelMapper.map(dto, Product.class);
+		product.setContainer(containerRepo.findByProductId(product.getId()));
+		product.setPlant(plantRepo.findByProductId(product.getId()));
 		return product;
 	}
 	

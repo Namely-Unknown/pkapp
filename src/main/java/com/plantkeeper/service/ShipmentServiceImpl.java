@@ -109,4 +109,9 @@ public class ShipmentServiceImpl implements ShipmentService {
 		return false;
 	}
 
+	@Override
+	public List<Shipment> findOutstandingByCompanyId(Long id) {
+		return repository.findOutstandingByCompanyid(id);
+	}
+
 }

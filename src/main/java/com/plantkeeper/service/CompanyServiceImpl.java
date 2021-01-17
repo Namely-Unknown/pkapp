@@ -20,6 +20,7 @@ import com.plantkeeper.entity.CustomerOrder;
 import com.plantkeeper.entity.OrderItem;
 import com.plantkeeper.repository.CompanyRepository;
 import com.plantkeeper.repository.CustomerOrderRepository;
+import com.plantkeeper.repository.ShippingCoRepository;
 import com.plantkeeper.sorting.AddressMainSorting;
 
 @Service
@@ -38,10 +39,14 @@ public class CompanyServiceImpl implements CompanyService {
 	@Autowired
 	private CustomerOrderRepository coRepo;
 	
+	@Autowired
+	private ShippingCoRepository shipperRepo;
+	
 	public Company mapToEntity(CompanyDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
 		Company company = modelMapper.map(dto, Company.class);
 		company.setOrders(coRepo.findAllByCustomerId(company.getId()));
+		company.setShippingCompanies(shipperRepo.findByCompanyId(company.getId()));
 		return company;
 	}
 
